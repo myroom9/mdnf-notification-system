@@ -12,5 +12,9 @@ spring:
         format_sql: true
     generate-ddl: true
 
+  thymeleaf:
+    prefix: "classpath:/templates/"
+    suffix: ".html"
+
 fcm:
   certification: "firebaseAccountKey.json"

@@ -13,7 +13,7 @@ public class FcmService {
         Message message = Message.builder()
                 .putData("title", "제목입니다")
                 .putData("content", "내용입니다")
-                .setToken("token setting 필요함").build();
+                .setToken("BEqNFkjIKo1bkhEngEilo8OLB0jWAC42SKe9Pv1a8uyq4wPbdaD30ksWkd67325-BKkqUT64BNDGmJgZT1pLMN4").build();
 
         FirebaseMessaging.getInstance().sendAsync(message);
     }
