@@ -1,11 +1,15 @@
 <!DOCTYPE html>
 <html xmlns xmlns:th="http://www.thymeleaf.org">
 <head>
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
     <meta charset="UTF-8">
     <title>fcm test</title>
 </head>
 <body>
 <h1>Test page! dd</h1>
+
+<p id="tokenValue"></p>
+
 <!-- The core Firebase JS SDK is always required and must be listed first -->
 <script src="https://www.gstatic.com/firebasejs/5.9.2/firebase.js"></script>
 <script src="https://www.gstatic.com/firebasejs/5.9.2/firebase-app.js"></script>
@@ -88,6 +92,7 @@
             return messaging.getToken();
         })
         .then(async function(token) {
+            $('#tokenValue').text(token);
             console.log(token);
             // 해당 onMessage는 데이터메시지로, 포그라운드인 상태에서
             // FCM 메시지를 전송하는 경우 콘솔에 표기하도록 작성된 코드입니다.

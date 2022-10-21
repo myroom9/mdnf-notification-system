@@ -1,3 +1,4 @@
+/*
 package com.mdnf.mdnf_notification_system.domain;
 
 import lombok.Getter;
@@ -18,3 +19,4 @@ public class FcmToken {
     @Column(name = "token", length = 1000)
     private String token;
 }
+*/

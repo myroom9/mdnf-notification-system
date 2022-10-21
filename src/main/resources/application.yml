@@ -1,16 +1,19 @@
+server:
+  port: 8080
+
 spring:
-  datasource:
-    driver-class-name: org.mariadb.jdbc.Driver
-    url: jdbc:mariadb://localhost:3306/develop
-    username: develop
-    password: 1234
-  jpa:
-    properties:
-      hibernate:
-        dialect: org.hibernate.dialect.MariaDBDialect
-        show_sql: true
-        format_sql: true
-    generate-ddl: true
+#  datasource:
+#    driver-class-name: org.mariadb.jdbc.Driver
+#    url: jdbc:mariadb://localhost:3306/develop
+#    username: root
+#    password: 1234
+#  jpa:
+#    properties:
+#      hibernate:
+#        dialect: org.hibernate.dialect.MariaDBDialect
+#        show_sql: true
+#        format_sql: true
+#    generate-ddl: false
 
   thymeleaf:
     prefix: "classpath:/templates/"
