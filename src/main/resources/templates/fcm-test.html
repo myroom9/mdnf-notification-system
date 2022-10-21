@@ -94,9 +94,11 @@
         .then(async function(token) {
             $('#tokenValue').text(token);
             console.log(token);
+
+
+
             // 해당 onMessage는 데이터메시지로, 포그라운드인 상태에서
             // FCM 메시지를 전송하는 경우 콘솔에 표기하도록 작성된 코드입니다.
-
             messaging.onMessage(payload => {
                 console.log(payload);
 

@@ -4,8 +4,11 @@ import com.mdnf.mdnf_notification_system.service.FcmService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.io.IOException;
 
 @Controller
 @RequiredArgsConstructor
@@ -13,10 +16,13 @@ public class FcmController {
 
     private final FcmService fcmService;
 
+    // https://phantagram.cafe24.com/test?title="whahn"&message="오늘은 몽환하는날!"&token=fD6MwUGBnc4:APA91bEcIS9R1MbY06Qcw-_nkiSnF3kiQzx7TX5pVr4MxqNNLwi16EvB9fSJ7XbGLGTQaeii4965buM6UIREIBjsplDUrDAGhS4cCPpCOuGqZNzZT-D_lcCTht3WLz2IhPOCnUI3BU_v
+    // https://phantagram.cafe24.com/test?title="whahn"&message="test"&token=c1UkpWO9LQI:APA91bHWwIkiNHAVn9cdjAyBKTxLvA2JKlSJt4C0vt-CoIhxQ6b-vAB2Uqs4RTA-h6h1kAMeGamqYrhy6oj4mYu_gQs-mjr0yaM4AkEPqBALkhwdRpMHksfihEGAfPjDBvfAv4CoH1ji
     @ResponseBody
     @GetMapping("/test")
-    public String test() {
-        fcmService.sendMessage("test");
+    public String test(@RequestParam("title") String title, @RequestParam("message") String message,
+                       @RequestParam("token") String token) throws IOException {
+        fcmService.sendMessage(title, message, token);
         return "success";
     }
 
