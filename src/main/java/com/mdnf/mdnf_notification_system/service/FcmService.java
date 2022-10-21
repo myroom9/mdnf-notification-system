@@ -6,7 +6,9 @@ import com.google.auth.oauth2.GoogleCredentials;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.messaging.Message;
 import com.google.gson.JsonParseException;
+import com.mdnf.mdnf_notification_system.domain.User;
 import com.mdnf.mdnf_notification_system.dto.FcmMessage;
+import com.mdnf.mdnf_notification_system.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import okhttp3.*;
 import org.springframework.beans.factory.annotation.Value;
@@ -21,11 +23,19 @@ import java.util.List;
 @RequiredArgsConstructor
 public class FcmService {
 
+    private UserRepository userRepository;
+
     @Value("${fcm.certification}")
     private String googleApplicationCredential;
 
     private final ObjectMapper objectMapper;
     private final String API_URL = "https://fcm.googleapis.com/v1/projects/mdnf-notification-system/messages:send";
+
+
+    public void saveUser(String mdnfUserId, String fcmToken) {
+        User user = User.builder().mdnfUserId(mdnfUserId).fcmToken(fcmToken).build();
+        userRepository.save(user);
+    }
 
     public void sendMessage(String fcmTitle, String fcmMessage, String token) throws IOException {
         String message = makeMessage(token, fcmTitle, fcmMessage);

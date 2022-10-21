@@ -3,10 +3,7 @@ package com.mdnf.mdnf_notification_system.controller;
 import com.mdnf.mdnf_notification_system.service.FcmService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 
@@ -24,6 +21,24 @@ public class FcmController {
                        @RequestParam("token") String token) throws IOException {
         fcmService.sendMessage(title, message, token);
         return "success";
+    }
+
+    /**
+     * fcm 토큰 저장
+     */
+    @ResponseBody
+    @PostMapping("/fcm/token")
+    public String test(@RequestParam("mdnfUserId") String mdnfUserId, @RequestParam("token") String token) {
+        fcmService.saveUser(mdnfUserId, token);
+        return "success";
+    }
+
+    /**
+     * 메인페이지
+     */
+    @GetMapping("/fcm/sign-up")
+    public String signUpPage() {
+        return "sign-up";
     }
 
     @GetMapping("/test-page")

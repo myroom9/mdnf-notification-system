@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html xmlns xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link th:href="@{/css/signup-page.css}" rel="stylesheet" />
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+    <meta charset="UTF-8">
+    <title>fcm test</title>
+</head>
+<body>
+    <!-- design site -->
+    <!-- https://codepen.io/dope/pen/ZQWBeL -->
+    <div class="user">
+        <header class="user__header">
+            <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/3219/logo.svg" alt="" />
+            <h1 class="user__title">던파모바일 펜타그램 길드 정식 알림 사이트</h1>
+        </header>
+
+        <form class="form">
+            <div class="form__group">
+                <input type="text" placeholder="Username" class="form__input" />
+            </div>
+
+            <!--<div class="form__group">
+                <input type="email" placeholder="Email" class="form__input" />
+            </div>
+
+            <div class="form__group">
+                <input type="password" placeholder="Password" class="form__input" />
+            </div>-->
+
+            <button class="btn" type="button">Register</button>
+        </form>
+    </div>
+
+<p id="tokenValue"></p>
+
+<!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/5.9.2/firebase.js"></script>
+<script src="https://www.gstatic.com/firebasejs/5.9.2/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/5.9.2/firebase-messaging.js"></script>
+
+
+<script th:inline="javascript">
+
+    const button = document.querySelector('.btn')
+    const form   = document.querySelector('.form')
+
+    button.addEventListener('click', function() {
+        form.classList.add('form--no')
+    });
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyCcXQ3O5vYBt0gq_o6-IEEGrlQ_Vqw5RPI",
+        authDomain: "mdnf-notification-system.firebaseapp.com",
+        projectId: "mdnf-notification-system",
+        storageBucket: "mdnf-notification-system.appspot.com",
+        messagingSenderId: "572040568814",
+        appId: "1:572040568814:web:bdbedb7fc5f964c22bb8ff",
+        measurementId: "G-SGGB9W88HG"
+    };
+
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+
+    console.log("여기는 오나???")
+
+    // Show Notification
+    // 메시지 기능 활성화를 알림
+    const messaging = firebase.messaging();
+
+
+    // RequestPermission 첫 어플 시작 시 알림 허용 or 불허를 사용자에게 안내합니다.
+    // 허용하지 않을 시 알람 메시지는 가지 않습니다.
+    messaging.requestPermission()
+        .then(function() {
+            // 알람이 허용되었을 때 토큰을 반환합니다.
+            // 해당 토큰을 통해 FCM 특정 사용자에게 메시지를 보낼 수 있습니다.
+            return messaging.getToken();
+        })
+        .then(async function(token) {
+            $('#tokenValue').text(token);
+            console.log(token);
+
+
+
+            // 해당 onMessage는 데이터메시지로, 포그라운드인 상태에서
+            // FCM 메시지를 전송하는 경우 콘솔에 표기하도록 작성된 코드입니다.
+            messaging.onMessage(payload => {
+                console.log(payload);
+
+            })
+        })
+
+</script>
+</body>
+
+</html>
