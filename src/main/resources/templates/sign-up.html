@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns xmlns:th="http://www.thymeleaf.org">
 <head>
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0, user-scalable=yes, viewport-fit=cover">
     <link th:href="@{/css/signup-page.css}" rel="stylesheet" />
     <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
     <meta charset="UTF-8">
@@ -12,14 +13,16 @@
     <div class="user">
         <header class="user__header">
             <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/3219/logo.svg" alt="" />
-            <h1 class="user__title">던파모바일 펜타그램 길드 정식 알림 사이트</h1>
+            <h2 class="user__title">던파모바일</h2>
+            <h2 class="user__title">펜타그램 길드</h2>
+            <h2 class="user__title">공식 알림 사이트</h2>
         </header>
 
-        <form class="form">
+        <form class="form" name="sign-up">
             <div class="form__group">
-                <input type="text" placeholder="Username" class="form__input" />
+                <input type="text" name="mdnfUserId" placeholder="Username" class="form__input" />
             </div>
-
+            <input type="hidden" name="fcmToken" id="fcmToken"/>
             <!--<div class="form__group">
                 <input type="email" placeholder="Email" class="form__input" />
             </div>
@@ -28,10 +31,9 @@
                 <input type="password" placeholder="Password" class="form__input" />
             </div>-->
 
-            <button class="btn" type="button">Register</button>
+            <button class="btn" type="button" onclick="signUp()">Register</button>
         </form>
     </div>
-
 <p id="tokenValue"></p>
 
 <!-- The core Firebase JS SDK is always required and must be listed first -->
@@ -69,27 +71,51 @@
     const messaging = firebase.messaging();
 
 
-    // RequestPermission 첫 어플 시작 시 알림 허용 or 불허를 사용자에게 안내합니다.
-    // 허용하지 않을 시 알람 메시지는 가지 않습니다.
-    messaging.requestPermission()
-        .then(function() {
-            // 알람이 허용되었을 때 토큰을 반환합니다.
-            // 해당 토큰을 통해 FCM 특정 사용자에게 메시지를 보낼 수 있습니다.
-            return messaging.getToken();
-        })
-        .then(async function(token) {
-            $('#tokenValue').text(token);
-            console.log(token);
-
-
-
-            // 해당 onMessage는 데이터메시지로, 포그라운드인 상태에서
-            // FCM 메시지를 전송하는 경우 콘솔에 표기하도록 작성된 코드입니다.
-            messaging.onMessage(payload => {
-                console.log(payload);
-
+    function signUp() {
+        // RequestPermission 첫 어플 시작 시 알림 허용 or 불허를 사용자에게 안내합니다.
+        // 허용하지 않을 시 알람 메시지는 가지 않습니다.
+        messaging.requestPermission()
+            .then(function () {
+                // 알람이 허용되었을 때 토큰을 반환합니다.
+                // 해당 토큰을 통해 FCM 특정 사용자에게 메시지를 보낼 수 있습니다.
+                return messaging.getToken();
             })
-        })
+            .then(async function (token) {
+                $('#tokenValue').text(token);
+                $('#fcmToken').val(token);
+
+                let signUpData = $("form[name=sign-up]").serialize();
+
+                console.log(token);
+
+                $.ajax({
+                    url: "/fcm/sign-up",
+                    data: signUpData,
+                    method: "POST"
+                })
+                    // HTTP 요청이 성공하면 요청한 데이터가 done() 메소드로 전달됨.
+                    .done(function (res) {
+                        console.log("res => ", res);
+
+                        // TODO: redirect somewhere
+                    })
+                    // HTTP 요청이 실패하면 오류와 상태에 관한 정보가 fail() 메소드로 전달됨.
+                    .fail(function (xhr, status, errorThrown) {
+                        console.log("failed res => ", xhr);
+                    })
+                    //
+                    .always(function (xhr, status) {
+
+                    });
+
+                // 해당 onMessage는 데이터메시지로, 포그라운드인 상태에서
+                // FCM 메시지를 전송하는 경우 콘솔에 표기하도록 작성된 코드입니다.
+                messaging.onMessage(payload => {
+                    console.log(payload);
+
+                })
+            })
+    }
 
 </script>
 </body>

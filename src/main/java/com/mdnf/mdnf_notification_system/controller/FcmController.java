@@ -1,12 +1,15 @@
 package com.mdnf.mdnf_notification_system.controller;
 
+import com.mdnf.mdnf_notification_system.dto.request.UserSignUpRequestDto;
 import com.mdnf.mdnf_notification_system.service.FcmService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 
+@Slf4j
 @Controller
 @RequiredArgsConstructor
 public class FcmController {
@@ -39,6 +42,20 @@ public class FcmController {
     @GetMapping("/fcm/sign-up")
     public String signUpPage() {
         return "sign-up";
+    }
+
+    /**
+     * 사용자등록
+     */
+    @ResponseBody
+    @PostMapping("/fcm/sign-up")
+    public String signUp(UserSignUpRequestDto request) {
+
+        log.info("가입 요청 정보: {}", request);
+
+        fcmService.saveUser(request.getMdnfUserId(), request.getFcmToken());
+
+        return "success";
     }
 
     @GetMapping("/test-page")
