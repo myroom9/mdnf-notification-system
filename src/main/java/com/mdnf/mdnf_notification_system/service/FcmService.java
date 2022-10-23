@@ -23,7 +23,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class FcmService {
 
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
     @Value("${fcm.certification}")
     private String googleApplicationCredential;
