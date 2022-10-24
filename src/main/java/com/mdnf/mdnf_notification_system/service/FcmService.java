@@ -6,6 +6,7 @@ import com.google.auth.oauth2.GoogleCredentials;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.messaging.Message;
 import com.google.gson.JsonParseException;
+import com.mdnf.mdnf_notification_system.domain.Alarm;
 import com.mdnf.mdnf_notification_system.domain.User;
 import com.mdnf.mdnf_notification_system.dto.FcmMessage;
 import com.mdnf.mdnf_notification_system.repository.UserRepository;
@@ -24,6 +25,7 @@ import java.util.List;
 public class FcmService {
 
     private final UserRepository userRepository;
+    private final AlarmService alarmService;
 
     @Value("${fcm.certification}")
     private String googleApplicationCredential;
@@ -61,6 +63,34 @@ public class FcmService {
 
         FirebaseMessaging.getInstance().sendAsync(message);*/
     }
+
+    public void sendAllAlarm(List<Alarm> alarms, List<User> users) {
+
+        alarms.forEach(o -> {
+            users.forEach(u -> {
+                try {
+                    String message = makeMessage(u.getFcmToken(), o.getTitle(), o.getContent());
+
+                    OkHttpClient client = new OkHttpClient();
+                    RequestBody requestBody = RequestBody.create(message,
+                                                MediaType.get("application/json; charset=utf-8"));
+
+                    Request request = new Request.Builder()
+                            .url(API_URL)
+                            .post(requestBody)
+                            .addHeader(HttpHeaders.AUTHORIZATION, "Bearer " + getAccessToken())
+                            .addHeader(HttpHeaders.CONTENT_TYPE, "application/json; UTF-8")
+                            .build();
+
+                    client.newCall(request).execute();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            });
+            alarmService.updateAlarmSendFlagToCompleted(o);
+        });
+    }
+
 
     private String makeMessage(String targetToken, String title, String body) throws JsonParseException, JsonProcessingException {
         FcmMessage fcmMessage = FcmMessage.builder()

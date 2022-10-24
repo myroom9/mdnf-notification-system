@@ -31,7 +31,7 @@ public class AlarmController {
     public String scheduleRegister(AlarmRegisterRequestDto request) {
         log.info("알람 등록 요청: {}", request);
 
-        alarmService.saveAlarm(request.getAlarmTitle(), request.getAlarmSchedule());
+        alarmService.saveAlarm(request.getAlarmTitle(), request.getAlarmContent(), request.getAlarmSchedule());
 
         return "success";
     }

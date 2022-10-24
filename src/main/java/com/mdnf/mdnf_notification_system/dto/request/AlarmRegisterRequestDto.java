@@ -15,6 +15,9 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class AlarmRegisterRequestDto {
     private String alarmTitle;
+
+    private String alarmContent;
+
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private LocalDateTime alarmSchedule;
 }

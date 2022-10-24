@@ -32,7 +32,12 @@
         <input type="hidden" name="alarmSchedule" id="alarmSchedule">
         <div class="mb-3">
             <label for="alarmTitle" class="form-label">알람명</label>
-            <input type="text" class="form-control" name="alarmTitle" id="alarmTitle" placeholder="알람 이름을 등록해주세요">
+            <input type="text" class="form-control" name="alarmTitle" id="alarmTitle" placeholder="알람 이름을 입력해주세요">
+        </div>
+
+        <div class="mb-3">
+            <label for="alarmTitle" class="form-label">알람내용</label>
+            <input type="text" class="form-control" name="alarmContent" id="alarmContent" placeholder="알람 내용을 입력해주세요">
         </div>
 
         <div class='input-group' id='datetimepicker1' data-td-target-input='nearest' data-td-target-toggle='nearest'>
@@ -40,7 +45,8 @@
                     id='datetimepicker1Input'
                     type='text'
                     class='form-control'
-                    data-td-target='#datetimepicker1'/>
+                    data-td-target='#datetimepicker1'
+                    placeholder="알람 발송 시간을 입력해주세요"/>
             <span
                     class='input-group-text'
                     data-td-target='#datetimepicker1'
