@@ -2,10 +2,22 @@
 <html xmlns xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0, user-scalable=yes, viewport-fit=cover">
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://phantagram.cafe24.com">
+    <meta property="og:title" content="펜타그램 알람사이트">
+    <meta property="og:image" content="https://play-lh.googleusercontent.com/RLfVW5sxXk8YHa0KfcqmPoIVJmBHzwZlrZYcFf8rBMr5DUPEdE7YyZS-qfPj5VzfwdA">
+    <meta property="og:description" content="펜타그램 알람사이트">
+    <meta property="og:site_name" content="Site Name">
+    <meta property="og:locale" content="ko">
+    <!-- 다음의 태그는 필수는 아니지만, 포함하는 것을 추천함 -->
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+
     <link th:href="@{/css/signup-page.css}" rel="stylesheet" />
     <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
     <meta charset="UTF-8">
-    <title>fcm test</title>
+    <title>펜타그램 알람사이트</title>
 </head>
 <body>
     <!-- design site -->
@@ -20,7 +32,7 @@
 
         <form class="form" name="sign-up">
             <div class="form__group">
-                <input type="text" name="mdnfUserId" placeholder="Username" class="form__input" />
+                <input type="text" name="mdnfUserId" placeholder="던파 아이디를 입력해주세요" class="form__input" />
             </div>
             <input type="hidden" name="fcmToken" id="fcmToken"/>
             <!--<div class="form__group">
@@ -31,7 +43,7 @@
                 <input type="password" placeholder="Password" class="form__input" />
             </div>-->
 
-            <button class="btn" type="button" onclick="signUp()">Register</button>
+            <button class="btn" type="button" onclick="signUp()">알람등록하기</button>
         </form>
     </div>
 <p id="tokenValue"></p>
