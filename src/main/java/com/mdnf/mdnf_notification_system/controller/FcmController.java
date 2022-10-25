@@ -1,11 +1,14 @@
 package com.mdnf.mdnf_notification_system.controller;
 
+import com.mdnf.mdnf_notification_system.domain.User;
+import com.mdnf.mdnf_notification_system.dto.ApiResponse;
 import com.mdnf.mdnf_notification_system.dto.request.UserSignUpRequestDto;
 import com.mdnf.mdnf_notification_system.service.FcmService;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
@@ -49,9 +52,20 @@ public class FcmController {
 
         log.info("가입 요청 정보: {}", request);
 
-        fcmService.saveUser(request.getMdnfUserId(), request.getFcmToken());
+        User user = fcmService.getUser(request.getFcmToken()).orElse(null);
+
+        if (ObjectUtils.isEmpty(user)) {
+            fcmService.saveUser(request.getMdnfUserId(), request.getFcmToken());
+        }
 
         return "success";
+    }
+
+    @ResponseBody
+    @DeleteMapping("/fcm/sign-out")
+    public ApiResponse fcmSignOut(@RequestParam("fcmToken") String fcmToken) {
+        fcmService.deleteUser(fcmToken);
+        return ApiResponse.success();
     }
 
     @GetMapping("/test-page")

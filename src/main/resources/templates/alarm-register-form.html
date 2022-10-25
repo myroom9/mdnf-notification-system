@@ -26,18 +26,18 @@
 <body>
 
 <div class="container">
-
+    <br/><br/><br/>
     <h1>알람등록하기</h1>
     <form name="alarm-register-form">
         <input type="hidden" name="alarmSchedule" id="alarmSchedule">
         <div class="mb-3">
             <label for="alarmTitle" class="form-label">알람명</label>
-            <input type="text" class="form-control" name="alarmTitle" id="alarmTitle" placeholder="알람 이름을 입력해주세요">
+            <input type="text" class="form-control" name="alarmTitle" id="alarmTitle" maxlength="20" placeholder="알람 이름을 입력해주세요(최대20자)">
         </div>
 
         <div class="mb-3">
-            <label for="alarmTitle" class="form-label">알람내용</label>
-            <input type="text" class="form-control" name="alarmContent" id="alarmContent" placeholder="알람 내용을 입력해주세요">
+            <label for="alarmContent" class="form-label">알람내용</label>
+            <input type="text" class="form-control" name="alarmContent" id="alarmContent" placeholder="알람 내용을 입력해주세요(최대30자)" maxlength="30">
         </div>
 
         <div class='input-group' id='datetimepicker1' data-td-target-input='nearest' data-td-target-toggle='nearest'>
@@ -65,12 +65,25 @@
 
         function registerAlarm() {
 
+            if ($('#alarmTitle').val() === '') {
+                alert("알람 제목을 입력해주세요.")
+                return ;
+            }
+
+            if ($('#alarmContent').val() === '') {
+                alert("알람 내용을 입력해주세요.")
+                return ;
+            }
+
+            if ($('#datetimepicker1Input').val() === '') {
+                alert("알람 발송 시간을 입력해주세요. (달력 아이콘 클릭!)")
+                return ;
+            }
+
             const localTime = new Date(picker.viewDate.getTime() - (picker.viewDate.getTimezoneOffset() * 60000)).toISOString();
             $('#alarmSchedule').val(localTime);
 
             let alarmRegisterData = $("form[name=alarm-register-form]").serialize();
-
-            console.log('alarmRegisterData => ', alarmRegisterData);
 
             $.ajax({
                 url: "/alarm/register",
@@ -80,12 +93,13 @@
                 // HTTP 요청이 성공하면 요청한 데이터가 done() 메소드로 전달됨.
                 .done(function (res) {
                     console.log("res => ", res);
-
-                    // TODO: redirect somewhere
+                    alert('알람 등록에 성공하였습니다.')
+                    location.href = "/alarm/schedule";
                 })
                 // HTTP 요청이 실패하면 오류와 상태에 관한 정보가 fail() 메소드로 전달됨.
                 .fail(function (xhr, status, errorThrown) {
                     console.log("failed res => ", xhr);
+                    alert('알람 등록에 실패하였습니다. 다시 시도해주세요.');
                 })
                 //
                 .always(function (xhr, status) {
@@ -113,6 +127,7 @@
                 },
             },
         });
+
     </script>
 
 </body>

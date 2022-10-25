@@ -3,12 +3,9 @@ package com.mdnf.mdnf_notification_system.repository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDateTime;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 class AlarmRepositoryTest {
@@ -20,6 +17,6 @@ class AlarmRepositoryTest {
     void findAllNotSentAlarmByTimeTest() {
         LocalDateTime startTime = LocalDateTime.now().minusMinutes(2);
         LocalDateTime endTime = LocalDateTime.now().plusMinutes(10);
-        alarmRepository.findAllNotSentAlarmByTime(startTime, endTime);
+        alarmRepository.findAllNotSentAlarmsByTime(startTime, endTime);
     }
 }

@@ -16,9 +16,11 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -33,6 +35,14 @@ public class FcmService {
     private final ObjectMapper objectMapper;
     private final String API_URL = "https://fcm.googleapis.com/v1/projects/mdnf-notification-system/messages:send";
 
+    @Transactional
+    public void deleteUser(String fcmToken) {
+        userRepository.deleteByFcmToken(fcmToken);
+    }
+
+    public Optional<User> getUser(String fcmToken) {
+        return userRepository.findByFcmToken(fcmToken);
+    }
 
     public void saveUser(String mdnfUserId, String fcmToken) {
         User user = User.builder().mdnfUserId(mdnfUserId).fcmToken(fcmToken).build();
