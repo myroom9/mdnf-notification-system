@@ -23,6 +23,10 @@ public class MdnfNotice {
         this.isLatestContent = true;
     }
 
+    public void makeNotLatestContent() {
+        this.isLatestContent = false;
+    }
+
     @Builder
     public MdnfNotice(int threadId, String title, BigInteger createDate, BigInteger modifyDate, BigInteger threadModifyDate) {
         this.threadId = threadId;
