@@ -4,6 +4,7 @@ import com.mdnf.mdnf_notification_system.feign.dto.MdnfResponse;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
+import org.checkerframework.checker.units.qual.C;
 import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
@@ -19,6 +20,10 @@ public class MdnfNotice {
 
     protected MdnfNotice() {}
 
+    public void settingBoardType(String boardType) {
+        this.boardType = boardType;
+    }
+
     public void makeLatestContent() {
         this.isLatestContent = true;
     }
@@ -28,7 +33,8 @@ public class MdnfNotice {
     }
 
     @Builder
-    public MdnfNotice(int threadId, String title, BigInteger createDate, BigInteger modifyDate, BigInteger threadModifyDate) {
+    public MdnfNotice(String boardType, int threadId, String title, BigInteger createDate, BigInteger modifyDate, BigInteger threadModifyDate) {
+        this.boardType = boardType;
         this.threadId = threadId;
         this.title = title;
         this.createDate = createDate;
@@ -42,6 +48,24 @@ public class MdnfNotice {
         response.getThreads().forEach(o -> {
             mappedData.add(
                     MdnfNotice.builder()
+                            .boardType("notice")
+                            .threadId(o.getThreadId())
+                            .title(o.getTitle())
+                            .createDate(o.getCreateDate())
+                            .modifyDate(o.getModifyDate())
+                            .threadModifyDate(o.getThreadModifyDate())
+                            .build());
+        });
+
+        return mappedData;
+    }
+
+    public static List<MdnfNotice> mdnfDevNoteMapper(MdnfResponse.Notice response) {
+        ArrayList<MdnfNotice> mappedData = new ArrayList<>();
+        response.getThreads().forEach(o -> {
+            mappedData.add(
+                    MdnfNotice.builder()
+                            .boardType("dev-note")
                             .threadId(o.getThreadId())
                             .title(o.getTitle())
                             .createDate(o.getCreateDate())
@@ -56,6 +80,9 @@ public class MdnfNotice {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(name = "board_type", length = 20)
+    private String boardType;
 
     @Column(name = "thread_id")
     private int threadId;

@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 //https://openapi.band.us/v2.2/band/post/create
-@FeignClient(name="naverBand", url = "https://openapi.band.us", configuration = FeignConfig.class)
+@FeignClient(name="naverBand", url = "${feign.request-url.naver-band}", configuration = FeignConfig.class)
 public interface NaverBandFeignClient {
     @PostMapping(value = "/v2.2/band/post/create", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     NaverBandWriteBoardResponse.WrapperData getNoticeContents(NaverBandWriteBoardRequest request);

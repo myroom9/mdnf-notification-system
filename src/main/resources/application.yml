@@ -19,5 +19,10 @@ spring:
     prefix: "classpath:/templates/"
     suffix: ".html"
 
+feign:
+  request-url:
+    naver-band: "https://openapi.band.us"
+    mdnf: "https://dnfm.nexon.com"
+
 fcm:
   certification: "firebaseAccountKey.json"

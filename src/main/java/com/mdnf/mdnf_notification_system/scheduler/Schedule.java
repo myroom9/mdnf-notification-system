@@ -39,7 +39,7 @@ public class Schedule {
         fcmService.sendAllAlarm(alarms, users);*/
     }
 
-    @Scheduled(fixedDelay = 5000)
+    @Scheduled(fixedDelay = 30000)
     public void watchNoticeContents() {
         MdnfResponse.Notice noticeContents = mdnfContentService.getNoticeContents();
         System.out.println("noticeContents = " + noticeContents);
@@ -50,6 +50,20 @@ public class Schedule {
 
         if (!ObjectUtils.isEmpty(newMdnfNotices)) {
             naverBandService.writeNaverBandBoardContent(newMdnfNotices);
+        }
+    }
+
+    @Scheduled(fixedDelay = 30000)
+    public void watchDevNoteContents() {
+        MdnfResponse.Notice noticeContents = mdnfContentService.getDevNoteContents();
+        System.out.println("devnotes = " + noticeContents);
+        List<MdnfNotice> mdnfNotices = MdnfNotice.mdnfDevNoteMapper(noticeContents);
+        System.out.println("mdnfdevnote = " + mdnfNotices);
+
+        List<MdnfNotice> newMdnfNotices = mdnfContentService.checkNewDevNoteAndRenewDevNote(mdnfNotices);
+
+        if (!ObjectUtils.isEmpty(newMdnfNotices)) {
+            naverBandService.writeNaverBandBoardContentDevNote(newMdnfNotices);
         }
     }
 }
