@@ -26,3 +26,6 @@ feign:
 
 fcm:
   certification: "firebaseAccountKey.json"
+
+logging:
+  config: "classpath:logback/logback.xml"

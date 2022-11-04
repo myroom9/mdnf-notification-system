@@ -42,11 +42,11 @@ public class Schedule {
     @Scheduled(fixedDelay = 30000)
     public void watchNoticeContents() {
         MdnfResponse.Notice noticeContents = mdnfContentService.getNoticeContents();
-        System.out.println("noticeContents = " + noticeContents);
+        log.info("던파모바일 공지사항 원천 데이터: {}", noticeContents);
         List<MdnfNotice> mdnfNotices = MdnfNotice.mdnfNoticeMapper(noticeContents);
-        System.out.println("mdnfNotices = " + mdnfNotices);
+        log.info("던파모바일 공지사항 매핑 데이터: {}", mdnfNotices);
 
-        List<MdnfNotice> newMdnfNotices = mdnfContentService.checkNewNoticeAndRenewNotice(mdnfNotices);
+        List<MdnfNotice> newMdnfNotices = mdnfContentService.checkNewContentAndRenewContent(mdnfNotices);
 
         if (!ObjectUtils.isEmpty(newMdnfNotices)) {
             naverBandService.writeNaverBandBoardContent(newMdnfNotices);
@@ -56,14 +56,14 @@ public class Schedule {
     @Scheduled(fixedDelay = 30000)
     public void watchDevNoteContents() {
         MdnfResponse.Notice noticeContents = mdnfContentService.getDevNoteContents();
-        System.out.println("devnotes = " + noticeContents);
+        log.info("개발자 노트 원천 데이터: {}", noticeContents);
         List<MdnfNotice> mdnfNotices = MdnfNotice.mdnfDevNoteMapper(noticeContents);
-        System.out.println("mdnfdevnote = " + mdnfNotices);
+        log.info("개발자 노트 매핑 데이터: {}", mdnfNotices);
 
-        List<MdnfNotice> newMdnfNotices = mdnfContentService.checkNewDevNoteAndRenewDevNote(mdnfNotices);
+        List<MdnfNotice> newMdnfNotices = mdnfContentService.checkNewContentAndRenewContent(mdnfNotices);
 
         if (!ObjectUtils.isEmpty(newMdnfNotices)) {
-            naverBandService.writeNaverBandBoardContentDevNote(newMdnfNotices);
+            naverBandService.writeNaverBandBoardContent(newMdnfNotices);
         }
     }
 }

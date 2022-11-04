@@ -38,54 +38,19 @@ public class MdnfContentService {
      * 던파모바일 공지사항
      */
     @Transactional
-    public List<MdnfNotice> checkNewNoticeAndRenewNotice(List<MdnfNotice> mdnfNotices) {
-        MdnfNotice latestContent = mdnfNoticeRepository.findLatestNoticeContent();
+    public List<MdnfNotice> checkNewContentAndRenewContent(List<MdnfNotice> mdnfNotices) {
+        String boardType = mdnfNotices.get(0).getBoardType();
+        MdnfNotice latestContent;
+        if (boardType.equals("notice")) {
+            latestContent = mdnfNoticeRepository.findLatestNoticeContent();
+        } else {
+            latestContent = mdnfNoticeRepository.findLatestDevNoteContent();
+        }
 
         // 최신글이 없다면, 가장 첫번째 글만 리턴
         if (latestContent == null) {
             mdnfNotices.get(0).makeLatestContent();
-            mdnfNotices.get(0).settingBoardType("notice");
-            mdnfNoticeRepository.save(mdnfNotices.get(0));
-            return Collections.singletonList(mdnfNotices.get(0));
-        }
-
-        ArrayList<MdnfNotice> newContents = new ArrayList<>();
-        int latestContentThreadId = latestContent.getThreadId();
-        AtomicInteger beforeLatestContentIndex = new AtomicInteger();
-
-        // 현재 api 컨텐츠와 최신글의 threadId 비교 후 갱신된 게시판글 추출
-        IntStream.range(0, mdnfNotices.size())
-                .forEach(o -> {
-                    if (mdnfNotices.get(o).getThreadId() == latestContentThreadId) {
-                        beforeLatestContentIndex.set(o);
-                    }
-                });
-
-        // index가 0이 아니면 최신글이 갱신됐다는 뜻임
-        if (beforeLatestContentIndex.get() != 0) {
-            IntStream.range(0, beforeLatestContentIndex.get())
-                    .forEach(o -> newContents.add(mdnfNotices.get(o)));
-
-            latestContent.makeNotLatestContent();
-            newContents.get(0).makeLatestContent();
-
-            mdnfNoticeRepository.saveAll(newContents);
-        }
-
-        return newContents;
-    }
-
-    /**
-     * 던파모바일 개발자 노트
-     */
-    @Transactional
-    public List<MdnfNotice> checkNewDevNoteAndRenewDevNote(List<MdnfNotice> mdnfNotices) {
-        MdnfNotice latestContent = mdnfNoticeRepository.findLatestDevNoteContent();
-
-        // 최신글이 없다면, 가장 첫번째 글만 리턴
-        if (latestContent == null) {
-            mdnfNotices.get(0).makeLatestContent();
-            mdnfNotices.get(0).settingBoardType("dev-note");
+            mdnfNotices.get(0).settingBoardType(boardType);
             mdnfNoticeRepository.save(mdnfNotices.get(0));
             return Collections.singletonList(mdnfNotices.get(0));
         }

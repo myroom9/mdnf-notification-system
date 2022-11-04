@@ -1,6 +1,7 @@
 package com.mdnf.mdnf_notification_system.domain;
 
 import com.mdnf.mdnf_notification_system.feign.dto.MdnfResponse;
+import com.mdnf.mdnf_notification_system.type.BoardType;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
@@ -48,7 +49,7 @@ public class MdnfNotice {
         response.getThreads().forEach(o -> {
             mappedData.add(
                     MdnfNotice.builder()
-                            .boardType("notice")
+                            .boardType(BoardType.NOTICE.getBoardType())
                             .threadId(o.getThreadId())
                             .title(o.getTitle())
                             .createDate(o.getCreateDate())
@@ -65,7 +66,7 @@ public class MdnfNotice {
         response.getThreads().forEach(o -> {
             mappedData.add(
                     MdnfNotice.builder()
-                            .boardType("dev-note")
+                            .boardType(BoardType.DEV_NOTE.getBoardType())
                             .threadId(o.getThreadId())
                             .title(o.getTitle())
                             .createDate(o.getCreateDate())
