@@ -1,30 +1,12 @@
 <!doctype html>
 <html>
 <head>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.1.0/fullcalendar.min.css" rel="stylesheet" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/moment.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.1.0/fullcalendar.min.js"></script>
-    <style>
-        .fc h2 {
-            font-size: 25px;
-            font-weight:bold;
-            margin-right:10px;
-        }
-        .fc .fc-toolbar>*>* {
-            float: left;
-            margin-left: 0.75em;
-            display: -webkit-inline-box;
-        }
-        .fc-head {
-            background-color: bisque;
-            line-height: 50px;
-            font-size: 15px;
-            font-weight: bold;
-        }
-        .fc-content{font-size:18px; background-color:black;}
-    </style>
+    <link th:href="@{/css/alarm-schedule.css}" rel="stylesheet" />
+    <link th:href="@{/css/fullcalendar.min.css}" rel="stylesheet" />
+    <script th:src="@{/js/jquery-3.6.1.min.js}"></script>
+    <script th:src="@{/js/jquery-ui.js}"></script>
+    <script th:src="@{/js/moment.min.js}"></script>
+    <script th:src="@{/js/fullcalendar.min.js}"></script>
 </head>
 <body style="text-align: -webkit-center;">
     <br/>
@@ -32,120 +14,7 @@
     <div style="width:80%;"id="calendar"></div>
 
     <br/>
-    <a href="/sign-up">알람서비스등록하기</a>
-    <a href="javascript:stopAlarmService()">알람서비스해지하기</a>
     <a href="/alarm/register">일정등록하기</a>
-
-    <script th:inline="javascript">
-        /*<![CDATA[*/
-        $(function() {
-            var hdr = {
-                left: '',
-                center: 'prev, title,next',
-                right: '',
-            };
-
-            $('#calendar').fullCalendar({
-                height: 650,
-                header: hdr,
-                defaultView: 'month',
-                editable: false,
-                droppable: false,
-                displayEventTime: false,
-                dayClick: function(date, allDay) {
-                },
-                eventClick: function(info) {},
-                select: function (start, end, allDay) {},
-                events: function(start, end, timezone, callback){
-                    var events = [];
-                    var tglCurrent = $('#calendar').fullCalendar('getDate');
-
-                    console.log("test => ", tglCurrent.toISOString().split('T')[0])
-
-                    $.ajax({
-                        url: "/alarm/schedule-data?currentDate=" + tglCurrent.toISOString().split('T')[0],
-                        method: "GET"
-                    })
-                    // HTTP 요청이 성공하면 요청한 데이터가 done() 메소드로 전달됨.
-                    .done(function (res) {
-                        console.log("res => ", res);
-
-                        if (res.data.length !== 0) {
-                            res.data.forEach((o, index) => {
-                                const alarmSchedule = o.alarmSchedule;
-                                events.push({title:o.title, start: new Date(alarmSchedule.split('T')[0]), end: new Date(alarmSchedule.split('T')[0]), time: alarmSchedule.split('T')[1].split('.')[0], sendFlag: o.sendFlag});
-                            })
-                        }
-                        callback(events);
-                    })
-                    // HTTP 요청이 실패하면 오류와 상태에 관한 정보가 fail() 메소드로 전달됨.
-                    .fail(function (xhr, status, errorThrown) {
-                        console.log("failed res => ", xhr);
-                        alert("알람 일정 조회에 실패했습니다.");
-                    })
-                },
-                eventRender: function (event, element, icon) {
-                    // element.find(".fc-title").append("<b>"+event.index+"</b>");
-                    if (event.sendFlag) {
-                        element.append("[o]").append(" <b> 알람시간: " + event.time + "</b>").find(".fc-title");
-                    } else {
-                        element.append("[x]").append(" <b> 알람시간: " + event.time + "</b>").find(".fc-title");
-                    }
-                },
-                windowResize: function (event, ui) {
-                    $('#calendar').fullCalendar('render');
-                }
-            });
-        });
-        /*]]>*/
-    </script>
-
-    <!-- The core Firebase JS SDK is always required and must be listed first -->
-    <script src="https://www.gstatic.com/firebasejs/5.9.2/firebase.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/5.9.2/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/5.9.2/firebase-messaging.js"></script>
-
-    <script>
-        const firebaseConfig = {
-            apiKey: "AIzaSyCcXQ3O5vYBt0gq_o6-IEEGrlQ_Vqw5RPI",
-            authDomain: "mdnf-notification-system.firebaseapp.com",
-            projectId: "mdnf-notification-system",
-            storageBucket: "mdnf-notification-system.appspot.com",
-            messagingSenderId: "572040568814",
-            appId: "1:572040568814:web:bdbedb7fc5f964c22bb8ff",
-            measurementId: "G-SGGB9W88HG"
-        };
-
-        firebase.initializeApp(firebaseConfig);
-
-        const messaging = firebase.messaging();
-        let fcmToken = '';
-        messaging.getToken().then(async function (token) {
-            fcmToken = token;
-        });
-
-        function stopAlarmService() {
-
-            if (fcmToken === '') {
-                alert("해당 브라우져에서 알람 서비스를 이용하고 있지않습니다.");
-                return ;
-            }
-
-            $.ajax({
-                url: "/fcm/sign-out?fcmToken=" + fcmToken,
-                method: "DELETE"
-            })
-                // HTTP 요청이 성공하면 요청한 데이터가 done() 메소드로 전달됨.
-                .done(function (res) {
-                    console.log("res => ", res);
-                    alert("알람서비스 해지에 성공하였습니다.")
-                })
-                // HTTP 요청이 실패하면 오류와 상태에 관한 정보가 fail() 메소드로 전달됨.
-                .fail(function (xhr, status, errorThrown) {
-                    console.log("failed res => ", xhr);
-                    alert("알람서비스 해지에 실패하였습니다.");
-                })
-        }
-    </script>
+    <script th:src="@{/js/alarm-schedule.js}"></script>
 </body>
 </html>

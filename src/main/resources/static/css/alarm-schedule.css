@@ -1,0 +1,17 @@
+.fc h2 {
+    font-size: 25px;
+    font-weight:bold;
+    margin-right:10px;
+}
+.fc .fc-toolbar>*>* {
+    float: left;
+    margin-left: 0.75em;
+    display: -webkit-inline-box;
+}
+.fc-head {
+    background-color: bisque;
+    line-height: 50px;
+    font-size: 15px;
+    font-weight: bold;
+}
+.fc-content{font-size:18px; background-color:black;}

@@ -4,131 +4,101 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link th:href="@{/css/bootstrap/bootstrap.min.css}" rel="stylesheet" />
+    <link th:href="@{/css/tempus-dominus.css}" rel="stylesheet" />
+    <link th:href="@{/css/fontawesome.min.css}" rel="stylesheet" />
+    <link th:href="@{/css/jquerysctipttop.css}" rel="stylesheet" />
+    <script th:src="@{/js/popper.min.js}"></script>
+    <script th:src="@{/js/tempus-dominus.js}"></script>
+    <script th:src="@{/js/jquery-3.6.1.min.js}"></script>
+    <script th:src="@{/js/dayjs.min.js}"></script>
+    <script th:src="@{/js/timepicker-bs4.js}"></script>
 
-    <!-- Popperjs -->
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.2/dist/umd/popper.min.js"
-            crossorigin="anonymous"></script>
-    <!-- Tempus Dominus JavaScript -->
-    <script src="https://cdn.jsdelivr.net/gh/Eonasdan/tempus-dominus@master/dist/js/tempus-dominus.js"
-            crossorigin="anonymous"></script>
-
-    <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
-
-    <!-- Tempus Dominus Styles -->
-    <link href="https://cdn.jsdelivr.net/gh/Eonasdan/tempus-dominus@master/dist/css/tempus-dominus.css"
-          rel="stylesheet" crossorigin="anonymous">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
-          rel="stylesheet">
     <title>알람등록하기</title>
 </head>
 <body>
 
-<div class="container">
-    <br/><br/><br/>
-    <h1>알람등록하기</h1>
-    <form name="alarm-register-form">
-        <input type="hidden" name="alarmSchedule" id="alarmSchedule">
-        <div class="mb-3">
-            <label for="alarmTitle" class="form-label">알람명</label>
-            <input type="text" class="form-control" name="alarmTitle" id="alarmTitle" maxlength="20" placeholder="알람 이름을 입력해주세요(최대20자)">
-        </div>
+    <div class="container">
+        <br/><br/><br/>
+        <h1>알람등록하기</h1>
+        <form name="alarm-register-form">
+            <div class="mb-3">
+                <label for="alarmTitle" class="form-label">알람명</label>
+                <input type="text" class="form-control" name="alarmTitle" id="alarmTitle" maxlength="20" placeholder="알람 이름을 입력해주세요(최대20자)">
+            </div>
+            <br />
+            <label for="notificationWay" class="form-label">알람 등록 방식을 선택해주세요</label>
+            <select class="form-select" aria-label="Default select example" name="notificationWay" id="notificationWay" onchange="notificationWaySelectEvent()">
+                <option value="SINGLE" selected>단건 알람 설정</option>
+                <option value="ROTATE">반복 알람 설정</option>
+            </select>
+            <br />
 
-        <div class="mb-3">
-            <label for="alarmContent" class="form-label">알람내용</label>
-            <input type="text" class="form-control" name="alarmContent" id="alarmContent" placeholder="알람 내용을 입력해주세요(최대30자)" maxlength="30">
-        </div>
+            <div>
+                <label for="datetimepicker1" class="form-label">알람 발송 시간 설정</label>
+                <div class='input-group' id='datetimepicker1' data-td-target-input='nearest' data-td-target-toggle='nearest'>
+                    <input
+                            id='datetimepicker1Input'
+                            type='text'
+                            class='form-control'
+                            data-td-target='#datetimepicker1'
+                            placeholder="알람 발송 시간을 입력해주세요"/>
+                    <span
+                            class='input-group-text'
+                            data-td-target='#datetimepicker1'
+                            data-td-toggle='datetimepicker'>
+                        <span class='fa-solid fa-calendar'></span>
+                    </span>
+                </div>
+            </div>
+            <br />
 
-        <div class='input-group' id='datetimepicker1' data-td-target-input='nearest' data-td-target-toggle='nearest'>
-            <input
-                    id='datetimepicker1Input'
-                    type='text'
-                    class='form-control'
-                    data-td-target='#datetimepicker1'
-                    placeholder="알람 발송 시간을 입력해주세요"/>
-            <span
-                    class='input-group-text'
-                    data-td-target='#datetimepicker1'
-                    data-td-toggle='datetimepicker'>
-                <span class='fa-solid fa-calendar'></span>
-            </span>
-        </div>
-        <br />
-        <button type="button" class="btn btn-primary" onclick="registerAlarm()">알람등록하기</button>
-    </form>
-</div>
+            <div>
+                <label for="datetimepicker1" class="form-label">알람 발송 설정 (이번달 한정 반복 설정!)</label>
+                <div class="form-group col-6">
+                    <label for="rotateSendTime">알람 발송 시간 설정</label>
+                    <input type="text" id="rotateSendTime" class="form-control" name="rotateSendTime" autocomplete="off" />
+                </div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+                <div class="form-group col-12">
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" id="dayCheckBox" name="day_check_box" value="1">
+                        <label class="form-check-label" for="dayCheckBox">월</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" id="dayCheckBox2" name="day_check_box" value="2">
+                        <label class="form-check-label" for="dayCheckBox2">화</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" id="dayCheckBox3" name="day_check_box" value="3">
+                        <label class="form-check-label" for="dayCheckBox3">수</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" id="dayCheckBox4" name="day_check_box" value="4">
+                        <label class="form-check-label" for="dayCheckBox4">목</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" id="dayCheckBox5" name="day_check_box" value="5">
+                        <label class="form-check-label" for="dayCheckBox5">금</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" id="dayCheckBox6" name="day_check_box" value="6">
+                        <label class="form-check-label" for="dayCheckBox6">토</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" id="dayCheckBox7" name="day_check_box" value="7">
+                        <label class="form-check-label" for="dayCheckBox7">일</label>
+                    </div>
+                </div>
+            </div>
+            <br />
 
-    <script>
+            <button type="button" class="btn btn-primary" onclick="registerAlarm()">알람등록하기</button>
+        </form>
+    </div>
 
-        function registerAlarm() {
-
-            if ($('#alarmTitle').val() === '') {
-                alert("알람 제목을 입력해주세요.")
-                return ;
-            }
-
-            if ($('#alarmContent').val() === '') {
-                alert("알람 내용을 입력해주세요.")
-                return ;
-            }
-
-            if ($('#datetimepicker1Input').val() === '') {
-                alert("알람 발송 시간을 입력해주세요. (달력 아이콘 클릭!)")
-                return ;
-            }
-
-            const localTime = new Date(picker.viewDate.getTime() - (picker.viewDate.getTimezoneOffset() * 60000)).toISOString();
-            $('#alarmSchedule').val(localTime);
-
-            let alarmRegisterData = $("form[name=alarm-register-form]").serialize();
-
-            $.ajax({
-                url: "/alarm/register",
-                data: alarmRegisterData,
-                method: "POST"
-            })
-                // HTTP 요청이 성공하면 요청한 데이터가 done() 메소드로 전달됨.
-                .done(function (res) {
-                    console.log("res => ", res);
-                    alert('알람 등록에 성공하였습니다.')
-                    location.href = "/alarm/schedule";
-                })
-                // HTTP 요청이 실패하면 오류와 상태에 관한 정보가 fail() 메소드로 전달됨.
-                .fail(function (xhr, status, errorThrown) {
-                    console.log("failed res => ", xhr);
-                    alert('알람 등록에 실패하였습니다. 다시 시도해주세요.');
-                })
-                //
-                .always(function (xhr, status) {
-
-                });
-        }
-
-        const picker = new tempusDominus.TempusDominus(document.getElementById('datetimepicker1'), {
-            display: {
-                components: {
-                    seconds: false,
-                    useTwentyfourHour: false,
-                },
-                icons: {
-                    type: 'icons',
-                    time: 'fa fa-solid fa-clock',
-                    date: 'fa fa-solid fa-calendar',
-                    up: 'fa fa-solid fa-arrow-up',
-                    down: 'fa fa-solid fa-arrow-down',
-                    previous: 'fa fa-solid fa-chevron-left',
-                    next: 'fa fa-solid fa-chevron-right',
-                    today: 'fa fa-solid fa-calendar-check',
-                    clear: 'fa fa-solid fa-trash',
-                    close: 'fas fa-solid fa-xmark'
-                },
-            },
-        });
-
-    </script>
+    <script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+    <script th:src="@{/js/alarm-register-form.js}"></script>
 
 </body>
 </html>

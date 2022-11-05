@@ -1,6 +1,5 @@
 package com.mdnf.mdnf_notification_system.dto.request;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,9 +14,13 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class AlarmRegisterRequestDto {
     private String alarmTitle;
-
     private String alarmContent;
+    private String notificationWay;
 
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-    private LocalDateTime alarmSchedule;
+    private LocalDateTime singleAlarmTime;
+
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+    private LocalDateTime rotateAlarmTime;
+    private int[] checkedDays;
 }
