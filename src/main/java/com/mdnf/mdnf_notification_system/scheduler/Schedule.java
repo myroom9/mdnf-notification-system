@@ -1,5 +1,6 @@
 package com.mdnf.mdnf_notification_system.scheduler;
 
+import com.mdnf.mdnf_notification_system.domain.Alarm;
 import com.mdnf.mdnf_notification_system.domain.MdnfNotice;
 import com.mdnf.mdnf_notification_system.feign.dto.MdnfResponse;
 import com.mdnf.mdnf_notification_system.service.*;
@@ -9,6 +10,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ObjectUtils;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Slf4j
@@ -26,17 +28,17 @@ public class Schedule {
     // 매분 체크
     // 현재 시간으로 2분 전 ~ 현재 시간 / 발송되지 않은 알람 조건으로 조회
     // 발송
-    @Scheduled(fixedDelay = 5000)
+    @Scheduled(fixedDelay = 30000)
     // @Scheduled(fixedDelayString = "${fixedDelay.in.milliseconds}") // 문자열 milliseconds 사용 시
     public void sendAlarmSchedule() {
-        log.info("돌고있어!");
-        /*LocalDateTime startTime = LocalDateTime.now().minusMinutes(2);
+        LocalDateTime startTime = LocalDateTime.now().minusMinutes(2);
         LocalDateTime endTime = startTime.plusMinutes(12);
 
-        List<User> users = userService.getAllUsers();
         List<Alarm> alarms = alarmService.getAllNotSentAlarm(startTime, endTime);
 
-        fcmService.sendAllAlarm(alarms, users);*/
+        if (!ObjectUtils.isEmpty(alarms)) {
+            naverBandService.writeNaverBandManualAlarm(alarms);
+        }
     }
 
     @Scheduled(fixedDelay = 30000)

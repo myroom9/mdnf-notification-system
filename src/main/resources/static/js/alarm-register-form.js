@@ -3,7 +3,14 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 function notificationWaySelectEvent() {
-    alert($("#notificationWay option:selected").val());
+    const selectedValue = $("#notificationWay option:selected").val();
+    if (selectedValue === 'SINGLE') {
+        $('#singleDiv').show();
+        $('#rotateDiv').hide();
+    } else {
+        $('#singleDiv').hide();
+        $('#rotateDiv').show();
+    }
 }
 
 function registerAlarm() {

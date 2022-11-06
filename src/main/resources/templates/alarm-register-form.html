@@ -34,7 +34,7 @@
             </select>
             <br />
 
-            <div>
+            <div id="singleDiv">
                 <label for="datetimepicker1" class="form-label">알람 발송 시간 설정</label>
                 <div class='input-group' id='datetimepicker1' data-td-target-input='nearest' data-td-target-toggle='nearest'>
                     <input
@@ -50,10 +50,10 @@
                         <span class='fa-solid fa-calendar'></span>
                     </span>
                 </div>
+                <br />
             </div>
-            <br />
 
-            <div>
+            <div id="rotateDiv" style="display: none">
                 <label for="datetimepicker1" class="form-label">알람 발송 설정 (이번달 한정 반복 설정!)</label>
                 <div class="form-group col-6">
                     <label for="rotateSendTime">알람 발송 시간 설정</label>
@@ -90,8 +90,8 @@
                         <label class="form-check-label" for="dayCheckBox7">일</label>
                     </div>
                 </div>
+                <br />
             </div>
-            <br />
 
             <button type="button" class="btn btn-primary" onclick="registerAlarm()">알람등록하기</button>
         </form>
