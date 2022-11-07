@@ -22,7 +22,7 @@ public class FcmController {
 
     @GetMapping("/")
     public String main() {
-        return "redirect:/sign-up";
+        return "redirect:/alarm/schedule";
     }
 
     /**

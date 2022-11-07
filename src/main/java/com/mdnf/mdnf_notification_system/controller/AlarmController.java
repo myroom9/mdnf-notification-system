@@ -3,6 +3,7 @@ package com.mdnf.mdnf_notification_system.controller;
 import com.mdnf.mdnf_notification_system.domain.Alarm;
 import com.mdnf.mdnf_notification_system.dto.ApiResponse;
 import com.mdnf.mdnf_notification_system.dto.request.AlarmRegisterRequestDto;
+import com.mdnf.mdnf_notification_system.service.AlarmSendControlFlagService;
 import com.mdnf.mdnf_notification_system.service.AlarmService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,6 +22,8 @@ import java.util.List;
 public class AlarmController {
 
     private final AlarmService alarmService;
+
+    private final AlarmSendControlFlagService alarmSendControlFlagService;
 
     @GetMapping("/alarm/schedule")
     public String schedule() {
@@ -55,4 +58,18 @@ public class AlarmController {
         return "success";
     }
 
+    @GetMapping("/alarm/option")
+    public String alarmOptionPage() {
+        return "alarm-option";
+    }
+
+    @ResponseBody
+    @GetMapping("/alarm/option/change")
+    public String alarmOptionPage(@RequestParam("flag") boolean sendFlag,
+                                  @RequestParam("type") String type) {
+
+        alarmSendControlFlagService.changeAlarmSendOption(sendFlag, type);
+
+        return "success";
+    }
 }
