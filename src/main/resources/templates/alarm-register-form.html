@@ -27,6 +27,13 @@
                 <input type="text" class="form-control" name="alarmTitle" id="alarmTitle" maxlength="20" placeholder="알람 이름을 입력해주세요(최대20자)">
             </div>
             <br />
+
+            <div class="mb-3">
+                <label for="alarmTitle" class="form-label">알람명</label>
+                <textarea type="text" class="form-control" name="alarmContent" id="alarmContent" maxlength="100" placeholder="알람 내용을 입력해주세요"></textarea>
+            </div>
+            <br />
+
             <label for="notificationWay" class="form-label">알람 등록 방식을 선택해주세요</label>
             <select class="form-select" aria-label="Default select example" name="notificationWay" id="notificationWay" onchange="notificationWaySelectEvent()">
                 <option value="SINGLE" selected>단건 알람 설정</option>

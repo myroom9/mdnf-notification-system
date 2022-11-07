@@ -18,6 +18,7 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class NaverBandService {
+    private final AlarmService alarmService;
     private final NaverBandRepository naverBandRepository;
     private final NaverBandFeignClient naverBandFeignClient;
 
@@ -33,13 +34,15 @@ public class NaverBandService {
             NaverBandWriteBoardRequest request = NaverBandWriteBoardRequest.builder()
                     .access_token(naverBandSecret.getAccessToken())
                     .band_key(naverBandSecret.getBandKey())
-                    .content(o.getTitle())
+                    .content(o.getContent())
                     .do_push(true).build();
 
             log.info("네이버 밴드 수동 알람 발송 데이터: {}", request);
 
             // TODO: response 안됨
             NaverBandWriteBoardResponse.WrapperData response = naverBandFeignClient.getNoticeContents(request);
+
+            alarmService.updateAlarmSendFlagToCompleted(o);
 
             // band api가 쿨타임이 필요함
             try {
