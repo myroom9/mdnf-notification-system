@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html xmlns xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="shortcut icon" th:href="@{/images/mdnf_favicon.ico}">
+
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://phantagram.cafe24.com">
+  <meta property="og:title" content="펜타그램 알람사이트">
+  <meta property="og:image" content="https://phantagram.cafe24.com/images/mdnf_logo.png">
+  <meta property="og:description" content="펜타그램 알람사이트">
+  <meta property="og:site_name" content="Site Name">
+  <meta property="og:locale" content="ko">
+  <!-- 다음의 태그는 필수는 아니지만, 포함하는 것을 추천함 -->
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+
+  <link rel="stylesheet" th:href="@{/css/bootstrap/bootstrap.min.css}">
+  <link rel="stylesheet" th:href="@{/css/main/owl.carousel.min.css}">
+  <link rel="stylesheet" th:href="@{/css/main/owl.theme.default.min.css}">
+  <link rel="stylesheet" th:href="@{/css/main/jquery.fancybox.min.css}">
+  <link rel="stylesheet" th:href="@{webfonts/main/flaticon/font/flaticon.css}">
+  <link rel="stylesheet" th:href="@{/css/main/aos.css}">
+  <link rel="stylesheet" th:href="@{/css/main/style.css}">
+
+  <title>Phantagram 사이트</title>
+</head>
+
+<body data-spy="scroll" data-target=".site-navbar-target" data-offset="100">
+
+  <div class="lines-wrap">
+    <div class="lines-inner">
+      <div class="lines"></div>
+    </div>
+  </div>
+  <!-- END lines -->
+
+  <div class="site-mobile-menu site-navbar-target">
+    <div class="site-mobile-menu-header">
+      <div class="site-mobile-menu-close">
+        <span class="icofont-close js-menu-toggle"></span>
+      </div>
+    </div>
+    <div class="site-mobile-menu-body"></div>
+  </div>
+  
+  <nav class="site-nav dark mb-5 site-navbar-target">
+    <div class="container">
+      <div class="site-navigation">
+        <a href="/" class="logo m-0">Phantagram</a>
+
+        <ul class="js-clone-nav d-none d-lg-inline-none site-menu float-right site-nav-wrap">
+          <li><a href="#home-section" class="nav-link active">Home</a></li>
+          <li>
+            <a href="#intro" class="nav-link">길드소개</a>
+          </li>
+          <li><a href="#services-section" class="nav-link">길드활동 & 가입조건</a></li>
+          <li><a href="#guild-sign-up" class="nav-link">길드가입 문의</a></li>
+          <li><a href="#band-sign-up" class="nav-link">네이버 밴드 알람용 가입</a></li>
+          <li><a href="/alarm/schedule" class="nav-link">펜타그램 알람 스케쥴</a></li>
+        </ul>
+
+        <a href="#" class="burger ml-auto float-right site-menu-toggle js-menu-toggle d-inline-block d-lg-inline-block" data-toggle="collapse" data-target="#main-navbar">
+          <span></span>
+        </a>
+
+      </div>
+    </div>
+  </nav>
+
+
+
+  <div class="untree_co-section pb-0" id="home-section">
+    <div class="container">
+      <div class="row justify-content-center text-center">
+        <div class="col-md-7">
+          <h1 class="heading gsap-reveal-hero mb-3"><strong>Phantagram 길드 공식 사이트</strong></h1>
+          <h2 class="subheading gsap-reveal-hero mb-4">
+            Phantagram(펜타그램) 길드의 공식 사이트입니다. 개인적으로 구축한 사이트이며, 길드원들의 편리성을 위하여 제작하게 되었습니다. 펜타그램의 기본 소개 및 던파모바일 사이트의 공지사항,개발자노트,업데이트소식을 누구보다 빠르게 접하실 수 있습니다. 또한,      각종 편의 알람도 받아 이벤트나 최신 소식을 놓지지 않을 수 있습니다! (알람을 받기 위해서는 네이버 밴드가입이 필요함[강제x])
+          </h2>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+
+
+    <div class="untree_co-section pb-0" id="intro">
+      <div class="container">
+        <div class="row justify-content-center mb-3">
+          <div class="col-lg-7 mx-auto text-center author-wrap">
+            <img th:src="@{/images/main/mdnf_main.png}" alt="Image" class="img-fluid rounded-circle mb-3">
+            <h2 class="text-black h5 font-weight-bold mb-2 gsap-reveal-hero">Phantagram (펜타그램) / Lv.4</h2>
+            <p class="gsap-reveal-hero">마스터: 윤넨탄 / 운영진: 꼬우면접던가, 1일3치킨, I엘I마I</p>
+          </div>
+        </div>
+
+        <div class="row justify-content-center">
+          <div class="col-lg-7">
+
+            <p class="gsap-reveal-hero">슈시아 서버에서 현재 4렙 길드의 <strong>Phantagram (펜타그램)</strong> 길드입니다.</p>
+
+            <p class="gsap-reveal-hero">펜타그램은 길드원분들의 <strong>플레이성향을 최대한 존중</strong>하며</p>
+
+            <p class="gsap-reveal-hero">최신정보공유와 길드 컨텐츠를 함께 즐기시며 <strong>소통하는 휴식처</strong>같은 길드로 운영할 계획입니다.</p>
+
+            <p class="gsap-reveal-hero">이런 <strong>자유로움 속 함께 성장해나갈 길드원</strong>을 <strong>모집</strong>합니다.</p>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="untree_co-section pb-0" id="services-section">
+      <div class="container">
+        <div class="row mb-4">
+          <div class="col-lg-7 text-center mx-auto">
+            <h2 class="section-heading gsap-reveal-hero mb-0"><strong>길드활동 & 가입조건</strong></h2>
+            <p class="gsap-reveal-hero">자유롭게 활동하며, 일부 활동을 통해 길드에 공헌하여 각자 캐릭터에 도움을 주고자합니다.</p>
+            <div class="wave gsap-reveal-hero" >
+              <svg>
+                <path d="M10,10 L50,100 L90,50" stroke="#0389ff"></path>
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+
+          <div class="col-6 col-sm-6 col-md-6 col-lg-4 mb-4">
+            <div class="service text-center">
+              <div class="gsap-reveal-hero mb-3">
+                <span class="icon-service"><img th:src="@{/images/main/svg/service-icon-7.svg}" alt="Image" class="img-fluid"></span>
+              </div>
+              <h3 class="gsap-reveal-hero">단톡방 (권장)</h3>
+              <p class="gsap-reveal-hero">공지톡방</p>
+              <p class="gsap-reveal-hero">정보공유&수다</p>
+              <p class="gsap-reveal-hero">레이드&파티구인</p>
+            </div>
+          </div>
+          <div class="col-6 col-sm-6 col-md-6 col-lg-4 mb-4">
+            <div class="service text-center">
+              <div class="gsap-reveal-hero mb-3">
+                <span class="icon-service"><img th:src="@{/images/main/svg/service-icon-6.svg}" alt="Image" class="img-fluid"></span>
+              </div>
+              <h3 class="gsap-reveal-hero">길드활동</h3>
+              <p class="gsap-reveal-hero">출석체크</p>
+              <p class="gsap-reveal-hero">몽환의 미궁 / 각성의 몽환</p>
+              <p class="gsap-reveal-hero">길드빙고</p>
+            </div>
+          </div>
+
+          <div class="col-6 col-sm-6 col-md-6 col-lg-4 mb-4">
+            <div class="service text-center">
+              <div class="gsap-reveal-hero mb-3">
+                <span class="icon-service"><img th:src="@{/images/main/svg/service-icon-1.svg}" alt="Image" class="img-fluid"></span>
+              </div>
+              <h3 class="gsap-reveal-hero">가입조건</h3>
+              <p class="gsap-reveal-hero">성인이상</p>
+              <p class="gsap-reveal-hero">부캐제한 (유동적으로 부캐수 제한)</p>
+            </div>
+          </div>
+
+
+          <div class="col-6 col-sm-6 col-md-6 col-lg-4 mb-4">
+            <div class="service text-center">
+              <div class="gsap-reveal-hero mb-3">
+                <span class="icon-service"><img th:src="@{/images/main/svg/service-icon-8.svg}" alt="Image" class="img-fluid"></span>
+              </div>
+              <h3 class="gsap-reveal-hero">운영방침</h3>
+              <p class="gsap-reveal-hero">미접속 강퇴 (3일)</p>
+              <p class="gsap-reveal-hero">길드 운영진 오픈톡방 항시 대기</p>
+            </div>
+          </div>
+
+          <!--<div class="col-6 col-sm-6 col-md-6 col-lg-4 mb-4">
+            <div class="service text-center">
+              <div class="gsap-reveal-hero mb-3">
+                <span class="icon-service"><img th:src="@{/images/main/svg/service-icon-4.svg}" alt="Image" class="img-fluid"></span>
+              </div>
+              <h3 class="gsap-reveal-hero">Search Ranking</h3>
+              <p class="gsap-reveal-hero">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
+            </div>
+          </div>
+
+          <div class="col-6 col-sm-6 col-md-6 col-lg-4 mb-4">
+            <div class="service text-center">
+              <div class="gsap-reveal-hero mb-3">
+                <span class="icon-service"><img th:src="@{/images/main/svg/service-icon-5.svg}" alt="Image" class="img-fluid"></span>
+              </div>
+              <h3 class="gsap-reveal-hero">Branding</h3>
+              <p class="gsap-reveal-hero">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
+            </div>
+          </div>-->
+
+        </div>
+      </div>
+    </div>
+
+
+  <div class="untree_co-section pb-0" id="guild-sign-up">
+    <div class="container">
+      <div class="row mb-4">
+        <div class="col-lg-7 text-center mx-auto">
+          <h2 class="section-heading gsap-reveal-hero mb-0"><strong>길드가입문의</strong></h2>
+        </div>
+      </div>
+
+      <div class="row justify-content-center">
+        <div class="col-lg-7">
+          <p class="gsap-reveal-hero">카카오톡 오픈채팅방 검색 : 펜타그램 or phantagram</p>
+          <p class="gsap-reveal-hero">바로 접근하기 : <a href="https://open.kakao.com/o/gHQVuTie">펜타그램 가입 오픈톡방</a></p>
+          <p class="gsap-reveal-hero">위 오픈채팅방 접근 하신 후 편히 문의주시면 됩니다.</p>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="untree_co-section pb-0" id="band-sign-up">
+    <div class="container">
+      <div class="row mb-4">
+        <div class="col-lg-7 text-center mx-auto">
+          <h2 class="section-heading gsap-reveal-hero mb-0"><strong>네이버밴드가입문의</strong></h2>
+        </div>
+      </div>
+
+      <div class="row justify-content-center">
+        <div class="col-lg-7">
+          <p class="gsap-reveal-hero">공지사항,개발자노트,업데이트,다양한 소식을 빠르게 접하실 수 있습니다.</p>
+          <p class="gsap-reveal-hero">네이버밴드(알림용) 가입하기 : <a href="https://band.us/n/a4a089g513g2t">펜타그램 알림용 밴드 가입하기</a> </p>
+          <p class="gsap-reveal-hero">위 링크로 가입 요청주시면 됩니다.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+    <div class="site-footer">
+      <div class="container">
+        <div class="row mt-5">
+          <div class="col-12 text-center">
+            <!--
+              **==========
+              NOTE:
+              Please don't remove this copyright link unless you buy the license here https://untree.co/license/
+
+              **==========
+            -->
+            <p class="mb-0">Copyright &copy;<script>document.write(new Date().getFullYear());</script>. All Rights Reserved. &mdash; Designed with love by <a href="https://untree.co">Untree.co</a> <!-- License information: https://untree.co/license/ -->
+            </p>
+          </div>
+        </div>
+      </div> <!-- /.container -->
+    </div> <!-- /.site-footer -->
+
+    <div id="overlayer"></div>
+    <div class="loader">
+      <div class="spinner-border" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
+    </div>
+
+    <script th:src="@{js/jquery-3.6.1.min.js}"></script>
+    <script th:src="@{js/popper.min.js}"></script>
+    <script th:src="@{js/bootstrap.bundle.min.js}"></script>
+    <script th:src="@{js/main/owl.carousel.min.js}"></script>
+    <script th:src="@{js/main/jquery.animateNumber.min.js}"></script>
+    <script th:src="@{js/main/jquery.waypoints.min.js}"></script>
+    <script th:src="@{js/main/jquery.fancybox.min.js}"></script>
+    <script th:src="@{js/main/aos.js}"></script>
+    <script th:src="@{js/main/wave-animate.js}"></script>
+    <script th:src="@{js/main/circle-progress.js}"></script>
+    <script th:src="@{js/main/imagesloaded.pkgd.js}"></script>
+    <script th:src="@{js/main/isotope.pkgd.min.js}"></script>
+    <script th:src="@{js/main/jquery.easing.1.3.js}"></script>
+    <script th:src="@{js/main/TweenMax.min.js}"></script>
+    <script th:src="@{js/main/ScrollMagic.min.js}"></script>
+    <script th:src="@{js/main/scrollmagic.animation.gsap.min.js}"></script>
+    <script th:src="@{js/main/custom.js}"></script>
+    
+  </body>
+
+  </html>
