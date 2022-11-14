@@ -4,6 +4,7 @@ import com.mdnf.mdnf_notification_system.domain.MdnfNotice;
 import com.mdnf.mdnf_notification_system.feign.MdnfFeignClient;
 import com.mdnf.mdnf_notification_system.feign.dto.MdnfResponse;
 import com.mdnf.mdnf_notification_system.repository.MdnfNoticeRepository;
+import com.mdnf.mdnf_notification_system.type.BoardType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -37,22 +38,24 @@ public class MdnfContentService {
     }
 
     /**
+     * 던파모바일 공지사항 데이터 가져오기
+     */
+    public MdnfResponse.Notice getUpdateContents() {
+        return mdnfFeignClient.getUpdateContents(1, 10);
+    }
+
+    /**
      * 던파모바일 공지사항
      */
     @Transactional
     public List<MdnfNotice> checkNewContentAndRenewContent(List<MdnfNotice> mdnfNotices) {
-        String boardType = mdnfNotices.get(0).getBoardType();
-        MdnfNotice latestContent;
-        if (boardType.equals("notice")) {
-            latestContent = mdnfNoticeRepository.findLatestNoticeContent();
-        } else {
-            latestContent = mdnfNoticeRepository.findLatestDevNoteContent();
-        }
+        BoardType boardType = mdnfNotices.get(0).getBoardType();
+        MdnfNotice latestContent = mdnfNoticeRepository.findLatestContentByBoardType(boardType);
 
         // 최신글이 없다면, 가장 첫번째 글만 리턴
         if (ObjectUtils.isEmpty(latestContent)) {
             mdnfNotices.get(0).makeLatestContent();
-            mdnfNotices.get(0).settingBoardType(boardType);
+            mdnfNotices.get(0).settingBoardType(boardType.getBoardType());
             mdnfNoticeRepository.save(mdnfNotices.get(0));
             return Collections.singletonList(mdnfNotices.get(0));
         }

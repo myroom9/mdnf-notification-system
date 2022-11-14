@@ -16,4 +16,8 @@ public interface MdnfFeignClient {
     @GetMapping(value = "/News/Devnote/GetThreads", consumes = MediaType.APPLICATION_JSON_VALUE)
     MdnfResponse.Notice getDevNoteContents(@RequestParam(value = "PageNo", defaultValue = "1") int pageNo,
                                           @RequestParam(value = "blockSize", defaultValue = "10") int blockSize);
+
+    @GetMapping(value = "/News/Update/GetThreads", consumes = MediaType.APPLICATION_JSON_VALUE)
+    MdnfResponse.Notice getUpdateContents(@RequestParam(value = "PageNo", defaultValue = "1") int pageNo,
+                                          @RequestParam(value = "blockSize", defaultValue = "10") int blockSize);
 }

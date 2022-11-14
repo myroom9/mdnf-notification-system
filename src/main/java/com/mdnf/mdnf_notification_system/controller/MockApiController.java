@@ -41,4 +41,15 @@ public class MockApiController {
         }
     }
 
+    @GetMapping("/News/Update/GetThreads")
+    public String mdnfUpdateMockApi() throws IOException {
+        ClassPathResource resource = new ClassPathResource("mock-data/mdnf-update-data.json");
+        InputStreamReader is = new InputStreamReader(resource.getInputStream(), StandardCharsets.UTF_8);
+
+        try (BufferedReader reader = new BufferedReader(is)) {
+            String data = reader.lines().collect(Collectors.joining("\n"));
+
+            return data;
+        }
+    }
 }

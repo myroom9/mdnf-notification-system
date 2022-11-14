@@ -22,7 +22,7 @@ public class MdnfNotice {
     protected MdnfNotice() {}
 
     public void settingBoardType(String boardType) {
-        this.boardType = boardType;
+        this.boardType = BoardType.of(boardType);
     }
 
     public void makeLatestContent() {
@@ -34,7 +34,7 @@ public class MdnfNotice {
     }
 
     @Builder
-    public MdnfNotice(String boardType, int threadId, String title, BigInteger createDate, BigInteger modifyDate, BigInteger threadModifyDate) {
+    public MdnfNotice(BoardType boardType, int threadId, String title, BigInteger createDate, BigInteger modifyDate, BigInteger threadModifyDate) {
         this.boardType = boardType;
         this.threadId = threadId;
         this.title = title;
@@ -44,29 +44,12 @@ public class MdnfNotice {
     }
 
 
-    public static List<MdnfNotice> mdnfNoticeMapper(MdnfResponse.Notice response) {
+    public static List<MdnfNotice> mdnfMapper(MdnfResponse.Notice response, BoardType boardType) {
         ArrayList<MdnfNotice> mappedData = new ArrayList<>();
         response.getThreads().forEach(o -> {
             mappedData.add(
                     MdnfNotice.builder()
-                            .boardType(BoardType.NOTICE.getBoardType())
-                            .threadId(o.getThreadId())
-                            .title(o.getTitle())
-                            .createDate(o.getCreateDate())
-                            .modifyDate(o.getModifyDate())
-                            .threadModifyDate(o.getThreadModifyDate())
-                            .build());
-        });
-
-        return mappedData;
-    }
-
-    public static List<MdnfNotice> mdnfDevNoteMapper(MdnfResponse.Notice response) {
-        ArrayList<MdnfNotice> mappedData = new ArrayList<>();
-        response.getThreads().forEach(o -> {
-            mappedData.add(
-                    MdnfNotice.builder()
-                            .boardType(BoardType.DEV_NOTE.getBoardType())
+                            .boardType(boardType)
                             .threadId(o.getThreadId())
                             .title(o.getTitle())
                             .createDate(o.getCreateDate())
@@ -82,8 +65,9 @@ public class MdnfNotice {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "board_type", length = 20)
-    private String boardType;
+    private BoardType boardType;
 
     @Column(name = "thread_id")
     private int threadId;

@@ -4,6 +4,7 @@ import com.mdnf.mdnf_notification_system.domain.Alarm;
 import com.mdnf.mdnf_notification_system.domain.MdnfNotice;
 import com.mdnf.mdnf_notification_system.feign.dto.MdnfResponse;
 import com.mdnf.mdnf_notification_system.service.*;
+import com.mdnf.mdnf_notification_system.type.BoardType;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -45,13 +46,13 @@ public class Schedule {
     public void watchNoticeContents() {
         MdnfResponse.Notice noticeContents = mdnfContentService.getNoticeContents();
         log.info("던파모바일 공지사항 원천 데이터: {}", noticeContents);
-        List<MdnfNotice> mdnfNotices = MdnfNotice.mdnfNoticeMapper(noticeContents);
+        List<MdnfNotice> mdnfNotices = MdnfNotice.mdnfMapper(noticeContents, BoardType.NOTICE);
         log.info("던파모바일 공지사항 매핑 데이터: {}", mdnfNotices);
 
         List<MdnfNotice> newMdnfNotices = mdnfContentService.checkNewContentAndRenewContent(mdnfNotices);
 
         if (!ObjectUtils.isEmpty(newMdnfNotices)) {
-            naverBandService.writeNaverBandBoardContent(newMdnfNotices);
+            naverBandService.writeNaverBandBoardContent(newMdnfNotices, BoardType.NOTICE);
         }
     }
 
@@ -59,13 +60,27 @@ public class Schedule {
     public void watchDevNoteContents() {
         MdnfResponse.Notice noticeContents = mdnfContentService.getDevNoteContents();
         log.info("개발자 노트 원천 데이터: {}", noticeContents);
-        List<MdnfNotice> mdnfNotices = MdnfNotice.mdnfDevNoteMapper(noticeContents);
+        List<MdnfNotice> mdnfNotices = MdnfNotice.mdnfMapper(noticeContents, BoardType.DEV_NOTE);
         log.info("개발자 노트 매핑 데이터: {}", mdnfNotices);
 
         List<MdnfNotice> newMdnfNotices = mdnfContentService.checkNewContentAndRenewContent(mdnfNotices);
 
         if (!ObjectUtils.isEmpty(newMdnfNotices)) {
-            naverBandService.writeNaverBandBoardContent(newMdnfNotices);
+            naverBandService.writeNaverBandBoardContent(newMdnfNotices, BoardType.DEV_NOTE);
+        }
+    }
+
+    @Scheduled(fixedDelay = 30000)
+    public void watchUpdateContents() {
+        MdnfResponse.Notice updateContents = mdnfContentService.getUpdateContents();
+        log.info("던파모바일 업데이트 원천 데이터: {}", updateContents);
+        List<MdnfNotice> mdnfNotices = MdnfNotice.mdnfMapper(updateContents, BoardType.UPDATE);
+        log.info("던파모바일 업데이트 매핑 데이터: {}", mdnfNotices);
+
+        List<MdnfNotice> newMdnfNotices = mdnfContentService.checkNewContentAndRenewContent(mdnfNotices);
+
+        if (!ObjectUtils.isEmpty(newMdnfNotices)) {
+            naverBandService.writeNaverBandBoardContent(newMdnfNotices, BoardType.UPDATE);
         }
     }
 }

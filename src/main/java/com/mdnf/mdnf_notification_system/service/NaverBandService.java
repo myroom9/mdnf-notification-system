@@ -61,7 +61,7 @@ public class NaverBandService {
         }
     }
 
-    public void writeNaverBandBoardContent(List<MdnfNotice> newNotices) {
+    public void writeNaverBandBoardContent(List<MdnfNotice> newNotices, BoardType boardType) {
         NaverBand naverBandSecret = getNaverBandSecret();
         AtomicBoolean sendFlag = new AtomicBoolean(true);
 
@@ -71,7 +71,7 @@ public class NaverBandService {
                      MdnfNotice o = newNotices.get(i);
 
                      if (i == 0) {
-                         AlarmSendOption alarmSendOption = alarmSendControlFlagService.getAlarmSendOption(o.getBoardType());
+                         AlarmSendOption alarmSendOption = alarmSendControlFlagService.getAlarmSendOption(o.getBoardType().getBoardType());
                          sendFlag.set(alarmSendOption.isSendFlag());
                      }
 
@@ -79,12 +79,7 @@ public class NaverBandService {
                          return ;
                      }
 
-                     String content;
-                     if (o.getBoardType().equals(BoardType.NOTICE.getBoardType())) {
-                         content = String.format(BoardType.NOTICE.getContent(), o.getTitle(), o.getThreadId());
-                     } else {
-                         content = String.format(BoardType.DEV_NOTE.getContent(), o.getTitle(), o.getThreadId());
-                     }
+                     String content = String.format(boardType.getContent(), o.getTitle(), o.getThreadId());
 
                      NaverBandWriteBoardRequest request = NaverBandWriteBoardRequest.builder()
                              .access_token(naverBandSecret.getAccessToken())
