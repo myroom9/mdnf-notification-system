@@ -52,8 +52,11 @@ public class AlarmController {
     public String scheduleRegister(AlarmRegisterRequestDto request) {
         log.info("알람 등록 요청: {}", request);
 
-        // TODO : 일단 단건 알람만 저장 / 복수 알람 추가해야됨
-        alarmService.saveAlarm(request.getAlarmTitle(), request.getAlarmContent(), request.getSingleAlarmTime());
+        if (request.getNotificationWay().equals("SINGLE")) {
+            alarmService.saveAlarm(request.getAlarmTitle(), request.getAlarmContent(), request.getSingleAlarmTime());
+        } else if (request.getNotificationWay().equals("ROTATE")){
+            alarmService.saveRotateAlarm(request);
+        }
 
         return "success";
     }
