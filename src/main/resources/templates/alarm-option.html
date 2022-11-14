@@ -16,20 +16,24 @@
   <h1>알람 발송 옵션 조절</h1>
 
   <div class="form-check form-switch">
-    <input class="form-check-input" type="checkbox" role="switch" id="manualAlarmOnOff" onclick="changeAlarmSendFlag(this.id, 'manual')">
+    <input class="form-check-input" type="checkbox" role="switch" id="manualAlarmOnOff" onclick="changeAlarmSendFlag(this.id, 'MANUAL')">
     <label class="form-check-label" for="manualAlarmOnOff">수동 알람 발송 on / off 버튼</label>
   </div>
 
   <div class="form-check form-switch">
-    <input class="form-check-input" type="checkbox" role="switch" id="noticeAlarmOnOff" onclick="changeAlarmSendFlag(this.id, 'notice')">
+    <input class="form-check-input" type="checkbox" role="switch" id="noticeAlarmOnOff" onclick="changeAlarmSendFlag(this.id, 'NOTICE')">
     <label class="form-check-label" for="noticeAlarmOnOff">공지사항 알람 발송 on / off 버튼</label>
   </div>
 
   <div class="form-check form-switch">
-    <input class="form-check-input" type="checkbox" role="switch" id="devNoteAlarmOnOff" onclick="changeAlarmSendFlag(this.id, 'dev-note')">
+    <input class="form-check-input" type="checkbox" role="switch" id="devNoteAlarmOnOff" onclick="changeAlarmSendFlag(this.id, 'DEV_NOTE')">
     <label class="form-check-label" for="devNoteAlarmOnOff">개발자 노트 알람 발송 on / off 버튼</label>
   </div>
 
+  <div class="form-check form-switch">
+    <input class="form-check-input" type="checkbox" role="switch" id="updateAlarmOnOff" onclick="changeAlarmSendFlag(this.id, 'UPDATE')">
+    <label class="form-check-label" for="updateAlarmOnOff">업데이트 공지 알람 발송 on / off 버튼</label>
+  </div>
 
 </div>
 
