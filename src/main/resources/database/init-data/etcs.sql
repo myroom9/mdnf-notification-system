@@ -1,0 +1,1 @@
+INSERT INTO etcs VALUES(1, 'cafe24@001', null, null, 'alarmRegisterSecretKey');
