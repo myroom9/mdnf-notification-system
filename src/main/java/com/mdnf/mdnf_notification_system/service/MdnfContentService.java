@@ -72,14 +72,18 @@ public class MdnfContentService {
                     }
                 });
 
+        Pattern exceptPattern = Pattern.compile("^.*(오류 악용|비인가 프로그램|오픈 마켓).*");
+
         // index가 0이 아니면 최신글이 갱신됐다는 뜻임
-
-        Pattern pattern = Pattern.compile("^.*(정기 점검).*");
-
         // 공지사항은 정기점검만 노티하기
         if (beforeLatestContentIndex.get() != 0) {
             IntStream.range(0, beforeLatestContentIndex.get())
-                    .filter(o -> pattern.matcher(mdnfNotices.get(o).getTitle()).matches())
+                    .filter(o -> {
+                        if (mdnfNotices.get(o).getBoardType().equals(BoardType.NOTICE)) {
+                            return !exceptPattern.matcher(mdnfNotices.get(o).getTitle()).matches();
+                        }
+                        return true;
+                    })
                     .forEach(o -> newContents.add(mdnfNotices.get(o)));
             newContents.get(0).makeLatestContent();
             latestContent.makeNotLatestContent();
@@ -88,6 +92,7 @@ public class MdnfContentService {
 
         // 정기 점검이 완료 됐을 경우에 제목만 변경됨
         // 제목이 다를 경우 정기 점검 완료로 판단
+        Pattern pattern = Pattern.compile("^.*(정기 점검).*");
         if (beforeLatestContentIndex.get() == 0 && pattern.matcher(mdnfNotices.get(0).getTitle()).matches()) {
             // 가장 최근 컨텐츠였던 글이 정기점검 글인지 확인
             if (Boolean.FALSE.equals(latestContent.getTitle().equals(mdnfNotices.get(0).getTitle()))
