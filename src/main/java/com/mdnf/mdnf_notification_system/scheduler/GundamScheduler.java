@@ -16,12 +16,12 @@ public class GundamScheduler {
     private final GundamService gundamService;
     private final NaverBandService naverBandService;
 
-    @Scheduled(fixedDelay = 300000)
+    @Scheduled(fixedDelay = 30000)
     public void checkSoldOutSite() {
         gundamService.checkSoldOutSite();
     }
 
-    @Scheduled(fixedDelay = 300000)
+    @Scheduled(fixedDelay = 30000)
     public void sendAlarm() {
         naverBandService.sendGundamAlarm();
     }
