@@ -56,7 +56,7 @@ public class Schedule {
         }
     }
 
-    // @Scheduled(fixedDelay = 30000)
+    @Scheduled(fixedDelay = 30000)
     public void watchDevNoteContents() {
         MdnfResponse.Notice noticeContents = mdnfContentService.getDevNoteContents();
         log.info("개발자 노트 원천 데이터: {}", noticeContents);

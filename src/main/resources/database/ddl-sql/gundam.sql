@@ -10,4 +10,4 @@ create table gundam (
                         title varchar(500),
                         url varchar(3000),
                         primary key (id)
-) engine=InnoDB
+) engine=InnoDB  DEFAULT CHARSET=utf8mb4;

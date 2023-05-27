@@ -36,11 +36,13 @@ public class GundamService {
     @Transactional
     public void registerGundamSite(RegisterGundamSite request) {
 
-        System.setProperty("webdriver.chrome.driver", "/Users/wonhwiahn/dev_tool/chromedriver_mac64/chromedriver");
+        // System.setProperty("webdriver.chrome.driver", "/Users/wonhwiahn/dev_tool/chromedriver_mac64/chromedriver");
+        System.setProperty("webdriver.chrome.driver", "/usr/bin/chromedriver");
         ChromeOptions chromeOptions = new ChromeOptions();
-        chromeOptions.addArguments("headless");
+        chromeOptions.addArguments("--headless");
+        chromeOptions.addArguments("--no-sandbox");
+        chromeOptions.addArguments("--disable-dev-shm-usage");
         chromeOptions.addArguments("--remote-allow-origins=*");
-        chromeOptions.addArguments("--user-agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36");
 
         ChromeDriver chromeDriver = new ChromeDriver(chromeOptions);
         chromeDriver.get(request.getUrl());
@@ -50,6 +52,7 @@ public class GundamService {
 
         WebElement element = chromeDriver.findElement(By.cssSelector("#wrap .detail_wrap .detail_right .info_area .type > .con .title"));
         String title = element.getText();
+        chromeDriver.quit();
 
         Gundam gundam = Gundam.builder()
                 .url(request.getUrl())
@@ -71,11 +74,17 @@ public class GundamService {
 
         List<Gundam> gundamList = gundamRepository.findAll();
 
-        System.setProperty("webdriver.chrome.driver", "/Users/wonhwiahn/dev_tool/chromedriver_mac64/chromedriver");
+        // System.setProperty("webdriver.chrome.driver", "/Users/wonhwiahn/dev_tool/chromedriver_mac64/chromedriver");
+        System.setProperty("webdriver.chrome.driver", "/usr/bin/chromedriver");
         ChromeOptions chromeOptions = new ChromeOptions();
-        chromeOptions.addArguments("headless");
+        chromeOptions.addArguments("--headless");
+        chromeOptions.addArguments("--no-sandbox");
+        chromeOptions.addArguments("--disable-dev-shm-usage");
         chromeOptions.addArguments("--remote-allow-origins=*");
-        chromeOptions.addArguments("--user-agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36");
+
+        // chromeOptions.addArguments("--headless");
+        // chromeOptions.addArguments("--remote-allow-origins=*");
+        // chromeOptions.addArguments("--user-agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36");
 
         ChromeDriver chromeDriver = new ChromeDriver(chromeOptions);
 
@@ -110,6 +119,8 @@ public class GundamService {
                 }
             }
         }
+
+        chromeDriver.quit();
     }
 
     @Transactional
