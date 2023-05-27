@@ -18,6 +18,9 @@ spring:
   thymeleaf:
     prefix: "classpath:/templates/"
     suffix: ".html"
+  config:
+    activate:
+      on-profile: prod
 
 feign:
   request-url:

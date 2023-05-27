@@ -1,5 +1,6 @@
 package com.mdnf.mdnf_notification_system.service;
 
+import com.mdnf.mdnf_notification_system.config.GoogleDriver;
 import com.mdnf.mdnf_notification_system.domain.Gundam;
 import com.mdnf.mdnf_notification_system.dto.gundam.request.RegisterGundamSite;
 import com.mdnf.mdnf_notification_system.dto.gundam.request.RemoveGundam;
@@ -18,12 +19,14 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class GundamService {
 
+    private final GoogleDriver googleDriver;
     private final GundamRepository gundamRepository;
 
     public List<Gundam> getGundamAlarmList() {
@@ -35,15 +38,7 @@ public class GundamService {
      */
     @Transactional
     public void registerGundamSite(RegisterGundamSite request) {
-
-        // System.setProperty("webdriver.chrome.driver", "/Users/wonhwiahn/dev_tool/chromedriver_mac64/chromedriver");
-        System.setProperty("webdriver.chrome.driver", "/usr/bin/chromedriver");
-        ChromeOptions chromeOptions = new ChromeOptions();
-        chromeOptions.addArguments("--headless");
-        chromeOptions.addArguments("--no-sandbox");
-        chromeOptions.addArguments("--disable-dev-shm-usage");
-        chromeOptions.addArguments("--remote-allow-origins=*");
-
+        ChromeOptions chromeOptions = googleDriver.getChromeOptions();
         ChromeDriver chromeDriver = new ChromeDriver(chromeOptions);
         chromeDriver.get(request.getUrl());
 
@@ -73,19 +68,7 @@ public class GundamService {
     public void checkSoldOutSite() {
 
         List<Gundam> gundamList = gundamRepository.findAll();
-
-        // System.setProperty("webdriver.chrome.driver", "/Users/wonhwiahn/dev_tool/chromedriver_mac64/chromedriver");
-        System.setProperty("webdriver.chrome.driver", "/usr/bin/chromedriver");
-        ChromeOptions chromeOptions = new ChromeOptions();
-        chromeOptions.addArguments("--headless");
-        chromeOptions.addArguments("--no-sandbox");
-        chromeOptions.addArguments("--disable-dev-shm-usage");
-        chromeOptions.addArguments("--remote-allow-origins=*");
-
-        // chromeOptions.addArguments("--headless");
-        // chromeOptions.addArguments("--remote-allow-origins=*");
-        // chromeOptions.addArguments("--user-agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36");
-
+        ChromeOptions chromeOptions = googleDriver.getChromeOptions();
         ChromeDriver chromeDriver = new ChromeDriver(chromeOptions);
 
         // chromeDriver.get("https://www.bnkrmall.co.kr/goods/detail.do?gno=15029");
@@ -125,7 +108,8 @@ public class GundamService {
 
     @Transactional
     public void removeGundamSite(RemoveGundam request) {
-        gundamRepository.deleteById(request.getId());
+        Gundam gundam = gundamRepository.findById(request.getId()).orElseThrow(() -> new IllegalArgumentException("해당 ID의 gundam객체를 찾을 수 없습니다."));
+        gundam.deleteEntity();
     }
 
 }
