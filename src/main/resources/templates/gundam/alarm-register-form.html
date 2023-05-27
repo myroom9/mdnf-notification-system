@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html xmlns xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0, user-scalable=yes, viewport-fit=cover">
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://phantagram.cafe24.com/gundam">
+    <meta property="og:title" content="건담 상품 상태 체크 사이트">
+    <meta property="og:image" content="https://cdn.bnkrmall.co.kr/live/data/base/editor/20220812/38e0ff5d506d43d08da9014fd85b5169.jpg">
+    <meta property="og:description" content="건담 상품 상태 체크 사이트">
+    <meta property="og:site_name" content="건담 상품 상태 체크 사이트">
+    <meta property="og:locale" content="ko">
+    <!-- 다음의 태그는 필수는 아니지만, 포함하는 것을 추천함 -->
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+
+    <link th:href="@{/css/signup-page.css}" rel="stylesheet" />
+    <script th:src="@{/js/jquery-3.6.1.min.js}"></script>
+    <meta charset="UTF-8">
+    <title>건담 입고 알람 체크 등록사이트</title>
+
+
+    <style>
+        #my-spinner { width: 100%; height: 100%; top: 0; left: 0; display: none; opacity: .6; background: silver; position: absolute; z-index: 2; }
+        #my-spinner div { width: 100%; height: 100%; display: table; }
+        #my-spinner span { display: table-cell; text-align: center; vertical-align: middle; }
+        #my-spinner img { background: white; padding: 1em; border-radius: .7em; }
+    </style>
+
+</head>
+<body>
+
+<div id='my-spinner'>
+    <div>
+    <span>
+    	<img src="/images/spinner.gif">
+    </span>
+    </div>
+</div>
+
+    <div class="user">
+        <header class="user__header">
+            <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/3219/logo.svg" alt="" />
+            <h2 class="user__title">건담사이트 입고 체크!</h2>
+        </header>
+
+        <form class="form" name="sign-up">
+            <div class="form__group">
+                <input type="text" name="url" id="url" placeholder="입고 체크할 사이트 URL을 입력해주세요." class="form__input" />
+                <input type="text" name="nickname" id="nickname" placeholder="입고 체크할 사이트의 별칭을 입력해주세요." class="form__input" />
+                <p style="font-size: 13px;">등록 요청하시는 사이트는 품절상태로 가정하고 등록됩니다.</p>
+                <p style="font-size: 13px;">등록시 약간의 시간이 소요될 수 있습니다.</p>
+            </div>
+            <button class="btn" type="button" onclick="signUp()" style="background: cadetblue">입고 체크 등록하기!</button>
+        </form>
+        <br />
+        <br />
+        <button class="btn" type="button" onclick="javascript:location.href='/alarm/schedule'" style="background: cadetblue">알람 스케쥴 보러가기</button>
+    </div>
+
+<script th:inline="javascript">
+
+    const button = document.querySelector('.btn')
+    const form   = document.querySelector('.form')
+
+    button.addEventListener('click', function() {
+        form.classList.add('form--no')
+    });
+
+    function signUp() {
+
+        if ($('#url').val() === '') {
+            alert("입고체크할 사이트 url을 입력해주세요")
+            return ;
+        }
+
+        if (confirm("해당 사이트 입고 상태 체크 등록을 진행하시겠습니까?")) {
+            let signUpData = $("form[name=sign-up]").serialize();
+            $("#my-spinner").show();
+            $.ajax({
+                url: "/gundam",
+                data: signUpData,
+                method: "POST"
+            })
+                // HTTP 요청이 성공하면 요청한 데이터가 done() 메소드로 전달됨.
+                .done(function (res) {
+                    console.log("res => ", res);
+                    alert("요청한 사이트의 입고 상태가 변경되면 네이버밴드로 바로 알림 드릴께요!");
+                    location.reload();
+                })
+                // HTTP 요청이 실패하면 오류와 상태에 관한 정보가 fail() 메소드로 전달됨.
+                .fail(function (xhr, status, errorThrown) {
+                    console.log("failed res => ", xhr);
+                    alert("등록에 실패했습니다. 운영자에게 문의부탁드립니다.");
+                })
+                //
+                .always(function (xhr, status) {
+                    $("#my-spinner").hide();
+                });
+        }
+    }
+
+</script>
+</body>
+
+</html>

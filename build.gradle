@@ -40,7 +40,7 @@ dependencies {
     implementation group: 'com.google.firebase', name: 'firebase-admin', version: '8.2.0'
 
     // dom parser (crawling)
-    // implementation group: 'org.jsoup', name: 'jsoup', version: '1.15.3'
+    implementation group: 'org.jsoup', name: 'jsoup', version: '1.15.3'
 
     compileOnly 'org.projectlombok:lombok'
     runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
@@ -48,6 +48,8 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
     implementation 'io.jsonwebtoken:jjwt:0.9.1'
+
+    implementation 'org.seleniumhq.selenium:selenium-java:4.9.1'
 
 }
 

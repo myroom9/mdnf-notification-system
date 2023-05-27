@@ -21,10 +21,9 @@ spring:
 
 feign:
   request-url:
-    # naver-band: "https://openapi.band.us"
-    # mdnf: "http://localhost:8080"
     naver-band: "https://openapi.band.us"
-    mdnf: "https://dnfm.nexon.com"
+    mdnf: "http://localhost:8080"
+    # mdnf: "https://dnfm.nexon.com"
 
 fcm:
   certification: "firebaseAccountKey.json"

@@ -29,7 +29,7 @@ public class Schedule {
     // 매분 체크
     // 현재 시간으로 2분 전 ~ 현재 시간 / 발송되지 않은 알람 조건으로 조회
     // 발송
-    @Scheduled(fixedDelay = 30000)
+    // @Scheduled(fixedDelay = 30000)
     // @Scheduled(fixedDelayString = "${fixedDelay.in.milliseconds}") // 문자열 milliseconds 사용 시
     public void sendAlarmSchedule() {
         LocalDateTime startTime = LocalDateTime.now().minusMinutes(2);
@@ -42,7 +42,7 @@ public class Schedule {
         }
     }
 
-    @Scheduled(fixedDelay = 30000)
+    // @Scheduled(fixedDelay = 30000)
     public void watchNoticeContents() {
         MdnfResponse.Notice noticeContents = mdnfContentService.getNoticeContents();
         log.info("던파모바일 공지사항 원천 데이터: {}", noticeContents);
@@ -56,7 +56,7 @@ public class Schedule {
         }
     }
 
-    @Scheduled(fixedDelay = 30000)
+    // @Scheduled(fixedDelay = 30000)
     public void watchDevNoteContents() {
         MdnfResponse.Notice noticeContents = mdnfContentService.getDevNoteContents();
         log.info("개발자 노트 원천 데이터: {}", noticeContents);
@@ -70,7 +70,7 @@ public class Schedule {
         }
     }
 
-    @Scheduled(fixedDelay = 30000)
+    // @Scheduled(fixedDelay = 30000)
     public void watchUpdateContents() {
         MdnfResponse.Notice updateContents = mdnfContentService.getUpdateContents();
         log.info("던파모바일 업데이트 원천 데이터: {}", updateContents);
