@@ -2,6 +2,7 @@ package com.mdnf.mdnf_notification_system.service;
 
 import com.mdnf.mdnf_notification_system.domain.Gundam;
 import com.mdnf.mdnf_notification_system.dto.gundam.request.RegisterGundamSite;
+import com.mdnf.mdnf_notification_system.dto.gundam.request.RemoveGundam;
 import com.mdnf.mdnf_notification_system.repository.GundamRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,6 +25,10 @@ import java.util.List;
 public class GundamService {
 
     private final GundamRepository gundamRepository;
+
+    public List<Gundam> getGundamAlarmList() {
+        return gundamRepository.findAllByDeletedAtIsNull();
+    }
 
     /**
      * 건담 입고 사이트 등록
@@ -105,6 +110,11 @@ public class GundamService {
                 }
             }
         }
-
     }
+
+    @Transactional
+    public void removeGundamSite(RemoveGundam request) {
+        gundamRepository.deleteById(request.getId());
+    }
+
 }

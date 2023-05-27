@@ -9,4 +9,6 @@ import java.util.List;
 public interface GundamRepository extends JpaRepository<Gundam, Long> {
     @Query("SELECT a FROM Gundam a WHERE a.isSendAlarm = false AND a.deletedAt IS NULL")
     List<Gundam> findAllByDeletedAtIsNullAndSendAlarmIsFalse();
+
+    List<Gundam> findAllByDeletedAtIsNull();
 }

@@ -2,6 +2,7 @@ package com.mdnf.mdnf_notification_system.api;
 
 import com.mdnf.mdnf_notification_system.dto.ApiResponse;
 import com.mdnf.mdnf_notification_system.dto.gundam.request.RegisterGundamSite;
+import com.mdnf.mdnf_notification_system.dto.gundam.request.RemoveGundam;
 import com.mdnf.mdnf_notification_system.service.GundamService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,4 +24,11 @@ public class GundamApiController {
         return ApiResponse.success();
     }
 
+    @PostMapping("/remove/gundam")
+    public ApiResponse removeGundam(RemoveGundam request) {
+        log.info("건담 입고 체크 사이트 삭제 요청: {}", request);
+        gundamService.removeGundamSite(request);
+        log.info("건담 입고 체크 사이트 삭제 완료");
+        return ApiResponse.success();
+    }
 }
