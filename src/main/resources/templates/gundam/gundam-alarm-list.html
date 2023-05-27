@@ -16,7 +16,9 @@
     <br/><br/><br/>
     <h1>건담알람리스트</h1>
     <ul th:each="item: ${list}" class="list-group list-group-horizontal">
-        <li class="list-group-item" th:text="|제목: ${item.title}|"></li>
+        <li class="list-group-item">
+            <a th:href="${item.url}">제목: [[${item.title}]]</a>
+        </li>
         <li class="list-group-item" th:text="|별칭: ${item.nickname}|"></li>
         <li class="list-group-item list-group-item-dark" th:if="${item.soldOut} == true">품절</li>
         <li class="list-group-item list-group-item-success" th:if="${item.soldOut} == false">구매가능</li>
