@@ -95,7 +95,7 @@ public class GundamService {
                 }
 
             } catch (Exception e) {
-                log.info("품절 상품 발생");
+                log.error("품절 상품 발생", e);
                 if (!o.isSoldOut() && o.isSendAlarm()) {
                     o.setSoldOutGoods();
                     gundamRepository.save(o);
